@@ -6,14 +6,16 @@ import { DoubleSide } from "three";
 import * as THREE from "three";
 
 const Scene = (props: any) => {
-  const wallGltf = useLoader(GLTFLoader, "../public/model/wall left.gltf");
+
+  console.log(import.meta.env);
+  const wallGltf = useLoader(GLTFLoader, `${import.meta.env.VITE_MODEL_PATH}/wall left.gltf`);
 
   const colorMap = useTexture(
-    "../public/textures/Polyrey - B206 - Bleu Encre.jpg"
+    `${import.meta.env.VITE_TEXTURE_PATH}/Polyrey - B206 - Bleu Encre.jpg`
   );
-  const tiles = useTexture("../public/textures/dekton.jpg");
+  const tiles = useTexture(`${import.meta.env.VITE_TEXTURE_PATH}/dekton.jpg`);
   const panelsTexture = useTexture(
-    "../public/textures/Polyrey - O100 - OR BROSSÉ.jpg"
+    `${import.meta.env.VITE_TEXTURE_PATH}/Polyrey - O100 - OR BROSSÉ.jpg`
   );
   //  wallGltf.scene.traverse((child) => {
   //    if (child.isMesh) {
@@ -23,7 +25,7 @@ const Scene = (props: any) => {
   //  });
   const wallRightGltf = useLoader(
     GLTFLoader,
-    "../public/model/wall right.gltf"
+    `${import.meta.env.VITE_MODEL_PATH}/wall right.gltf`
   );
   //  wallRightGltf.scene.traverse((child) => {
   //    if (child.isMesh) {
@@ -32,13 +34,13 @@ const Scene = (props: any) => {
   //    }
   //  });
 
-  const floor = useLoader(GLTFLoader, "../public/model/floor.gltf");
+  const floor = useLoader(GLTFLoader, `${import.meta.env.VITE_MODEL_PATH}/floor.gltf`);
   const toilet = useLoader(
     GLTFLoader,
-    "../public/model/toilet bowl and top.gltf"
+    `${import.meta.env.VITE_MODEL_PATH}/toilet bowl and top.gltf`
   );
-  let vaniety = useLoader(GLTFLoader, "../public/model/vanity.gltf");
-  const underVanity = useLoader(GLTFLoader, "public/model/under panel.gltf");
+  let vaniety = useLoader(GLTFLoader, `${import.meta.env.VITE_MODEL_PATH}/vanity.gltf`);
+  const underVanity = useLoader(GLTFLoader, `${import.meta.env.VITE_MODEL_PATH}/under panel.gltf`)
   underVanity.scene.traverse((child) => {
     if (child.isMesh) {
       child.material.map = panelsTexture;
@@ -47,8 +49,8 @@ const Scene = (props: any) => {
       // child.material.metalness = 0.5;
     }
   });
-  const vanityStand = useLoader(GLTFLoader, "public/model/vanity stand.gltf");
-  const upStand = useLoader(GLTFLoader, "public/model/upstand.gltf");
+  const vanityStand = useLoader(GLTFLoader, `${import.meta.env.VITE_MODEL_PATH}/vanity stand.gltf`);
+  const upStand = useLoader(GLTFLoader, `${import.meta.env.VITE_MODEL_PATH}/upstand.gltf`);
   upStand.scene.traverse((child) => {
     if (child.isMesh) {
       child.material.map = colorMap;
@@ -57,9 +59,9 @@ const Scene = (props: any) => {
       // child.material.metalness = 0.5;
     }
   });
-  const toiletSeat = useLoader(GLTFLoader, "../public/model/toilet seat.gltf");
+  const toiletSeat = useLoader(GLTFLoader, `${import.meta.env.VITE_MODEL_PATH}/toilet seat.gltf`);
 
-  const mirror = useLoader(GLTFLoader, "../public/model/mirror.gltf");
+  const mirror = useLoader(GLTFLoader, `${import.meta.env.VITE_MODEL_PATH}/mirror.gltf`);
   console.log(mirror);
   const newMirror = new THREE.BufferGeometry();
 
@@ -84,10 +86,10 @@ const Scene = (props: any) => {
   });
   console.log(newMirror);
   console.log(mesh);
-  const backPanels = useLoader(GLTFLoader, "public/model/back panels.gltf");
-  const backWall = useLoader(GLTFLoader, "public/model/back wall.gltf");
-  const ceiling = useLoader(GLTFLoader, "public/model/ceiling.gltf");
-  const panels = useLoader(GLTFLoader, "public/model/panel.gltf");
+  const backPanels = useLoader(GLTFLoader, `${import.meta.env.VITE_MODEL_PATH}/back panels.gltf`);
+  const backWall = useLoader(GLTFLoader, `${import.meta.env.VITE_MODEL_PATH}/back wall.gltf`);
+  const ceiling = useLoader(GLTFLoader, `${import.meta.env.VITE_MODEL_PATH}/ceiling.gltf`);
+  const panels = useLoader(GLTFLoader, `${import.meta.env.VITE_MODEL_PATH}/panel.gltf`);
   panels.scene.traverse((child) => {
     if (child.isMesh) {
       child.material.map = panelsTexture;
@@ -96,19 +98,19 @@ const Scene = (props: any) => {
       child.material.metalness = 0.5;
     }
   });
-  const waterTab = useLoader(GLTFLoader, "public/model/water tab.gltf");
-  const accessPanel = useLoader(GLTFLoader, "public/model/access panel.gltf");
+  const waterTab = useLoader(GLTFLoader, `${import.meta.env.VITE_MODEL_PATH}/water tab.gltf`);
+  const accessPanel = useLoader(GLTFLoader, `${import.meta.env.VITE_MODEL_PATH}/access panel.gltf`);
   const soapDispenser = useLoader(
     GLTFLoader,
-    "public/model/soap dispenser.gltf"
+    `${import.meta.env.VITE_MODEL_PATH}/soap dispenser.gltf`
   );
-  const handDryer = useLoader(GLTFLoader, "public/model/hand dryer.gltf");
+  const handDryer = useLoader(GLTFLoader, `${import.meta.env.VITE_MODEL_PATH}/hand dryer.gltf`);
   const tolietRollHanlder = useLoader(
     GLTFLoader,
-    "public/model/toilet roll handler.gltf"
+    `${import.meta.env.VITE_MODEL_PATH}/toilet roll handler.gltf`
   );
-  const toiletPaper = useLoader(GLTFLoader, "public/model/toilet paper.gltf");
-  const flushValve = useLoader(GLTFLoader, "public/model/flush valve.gltf");
+  const toiletPaper = useLoader(GLTFLoader, `${import.meta.env.VITE_MODEL_PATH}/toilet paper.gltf`);
+  const flushValve = useLoader(GLTFLoader, `${import.meta.env.VITE_MODEL_PATH}/flush valve.gltf`);
   backPanels.scene.traverse((child) => {
     if (child.isMesh) {
       child.material.map = colorMap;
