@@ -1,23 +1,31 @@
 // @ts-nocheck
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { useLoader } from "@react-three/fiber";
-import { useTexture } from "@react-three/drei";
+import { MeshReflectorMaterial, useTexture } from "@react-three/drei";
 import { DoubleSide } from "three";
 import * as THREE from "three";
 
 const Scene = (props: any) => {
-
   console.log(import.meta.env);
-  const wallGltf = useLoader(GLTFLoader, `${import.meta.env.VITE_MODEL_PATH}/wall left.gltf`);
+  const wallGltf = useLoader(
+    GLTFLoader,
+    `${import.meta.env.VITE_MODEL_PATH}/wall left.gltf`
+  );
 
   const colorMap = useTexture(
     `${import.meta.env.VITE_TEXTURE_PATH}/Polyrey - B206 - Bleu Encre.jpg`
   );
   const tiles = useTexture(`${import.meta.env.VITE_TEXTURE_PATH}/dekton.jpg`);
+
+  tiles.repeat.set(100, 100);
+  tiles.wrapS = THREE.RepeatWrapping;
+  tiles.wrapT = THREE.RepeatWrapping;
+
+  tiles.needsUpdate = true;
   const panelsTexture = useTexture(
     `${import.meta.env.VITE_TEXTURE_PATH}/Polyrey - O100 - OR BROSSÉ.jpg`
   );
-  //  wallGltf.scene.traverse((child) => {
+  //  wallGltf.scene.traverse((child)=>{
   //    if (child.isMesh) {
   //      child.material.map = colorMap;
   //      child.material.needsUpdate = true;
@@ -25,32 +33,49 @@ const Scene = (props: any) => {
   //  });
   const wallRightGltf = useLoader(
     GLTFLoader,
-    `${import.meta.env.VITE_MODEL_PATH}/wall right.gltf`
+    `${import.meta.env.VITE_MODEL_PATH}/wall 2.glb`
   );
   //  wallRightGltf.scene.traverse((child) => {
   //    if (child.isMesh) {
-  //      child.material.map = colorMap;
+  //      child.material.map = tiles;
   //      child.material.needsUpdate = true;
   //    }
   //  });
 
-  const floor = useLoader(GLTFLoader, `${import.meta.env.VITE_MODEL_PATH}/floor.gltf`);
+  const floor = useLoader(
+    GLTFLoader,
+    `${import.meta.env.VITE_MODEL_PATH}/floor.gltf`
+  );
   const toilet = useLoader(
     GLTFLoader,
     `${import.meta.env.VITE_MODEL_PATH}/toilet bowl and top.gltf`
   );
-  let vaniety = useLoader(GLTFLoader, `${import.meta.env.VITE_MODEL_PATH}/vanity.gltf`);
-  const underVanity = useLoader(GLTFLoader, `${import.meta.env.VITE_MODEL_PATH}/under panel.gltf`)
-  underVanity.scene.traverse((child) => {
+  let vaniety = useLoader(
+    GLTFLoader,
+    `${import.meta.env.VITE_MODEL_PATH}/vanity.gltf`
+  );
+  // let vaniety=useLoader(GLTFLoader,"public/superloo 2.gltf")
+  const underVanity = useLoader(
+    GLTFLoader,
+    `${import.meta.env.VITE_MODEL_PATH}/under panel.gltf`
+  );
+  underVanity.scene.traverse((child: any) => {
     if (child.isMesh) {
       child.material.map = panelsTexture;
       child.material.needsUpdate = true;
+
       // child.material.roughness = 0;
       // child.material.metalness = 0.5;
     }
   });
-  const vanityStand = useLoader(GLTFLoader, `${import.meta.env.VITE_MODEL_PATH}/vanity stand.gltf`);
-  const upStand = useLoader(GLTFLoader, `${import.meta.env.VITE_MODEL_PATH}/upstand.gltf`);
+  const vanityStand = useLoader(
+    GLTFLoader,
+    `${import.meta.env.VITE_MODEL_PATH}/vanity stand.gltf`
+  );
+  const upStand = useLoader(
+    GLTFLoader,
+    `${import.meta.env.VITE_MODEL_PATH}/upstand.gltf`
+  );
   upStand.scene.traverse((child) => {
     if (child.isMesh) {
       child.material.map = colorMap;
@@ -59,9 +84,15 @@ const Scene = (props: any) => {
       // child.material.metalness = 0.5;
     }
   });
-  const toiletSeat = useLoader(GLTFLoader, `${import.meta.env.VITE_MODEL_PATH}/toilet seat.gltf`);
+  const toiletSeat = useLoader(
+    GLTFLoader,
+    `${import.meta.env.VITE_MODEL_PATH}/toilet seat.gltf`
+  );
 
-  const mirror = useLoader(GLTFLoader, `${import.meta.env.VITE_MODEL_PATH}/mirror.gltf`);
+  const mirror = useLoader(
+    GLTFLoader,
+    `${import.meta.env.VITE_MODEL_PATH}/mirror.gltf`
+  );
   console.log(mirror);
   const newMirror = new THREE.BufferGeometry();
 
@@ -86,10 +117,22 @@ const Scene = (props: any) => {
   });
   console.log(newMirror);
   console.log(mesh);
-  const backPanels = useLoader(GLTFLoader, `${import.meta.env.VITE_MODEL_PATH}/back panels.gltf`);
-  const backWall = useLoader(GLTFLoader, `${import.meta.env.VITE_MODEL_PATH}/back wall.gltf`);
-  const ceiling = useLoader(GLTFLoader, `${import.meta.env.VITE_MODEL_PATH}/ceiling.gltf`);
-  const panels = useLoader(GLTFLoader, `${import.meta.env.VITE_MODEL_PATH}/panel.gltf`);
+  const backPanels = useLoader(
+    GLTFLoader,
+    `${import.meta.env.VITE_MODEL_PATH}/back panels.gltf`
+  );
+  const backWall = useLoader(
+    GLTFLoader,
+    `${import.meta.env.VITE_MODEL_PATH}/back wall.gltf`
+  );
+  const ceiling = useLoader(
+    GLTFLoader,
+    `${import.meta.env.VITE_MODEL_PATH}/ceiling.gltf`
+  );
+  const panels = useLoader(
+    GLTFLoader,
+    `${import.meta.env.VITE_MODEL_PATH}/panel.gltf`
+  );
   panels.scene.traverse((child) => {
     if (child.isMesh) {
       child.material.map = panelsTexture;
@@ -98,19 +141,42 @@ const Scene = (props: any) => {
       child.material.metalness = 0.5;
     }
   });
-  const waterTab = useLoader(GLTFLoader, `${import.meta.env.VITE_MODEL_PATH}/water tab.gltf`);
-  const accessPanel = useLoader(GLTFLoader, `${import.meta.env.VITE_MODEL_PATH}/access panel.gltf`);
+  const waterTab = useLoader(
+    GLTFLoader,
+    `${import.meta.env.VITE_MODEL_PATH}/water tab.gltf`
+  );
+  const accessPanel = useLoader(
+    GLTFLoader,
+    `${import.meta.env.VITE_MODEL_PATH}/access panel.gltf`
+  );
   const soapDispenser = useLoader(
     GLTFLoader,
     `${import.meta.env.VITE_MODEL_PATH}/soap dispenser.gltf`
   );
-  const handDryer = useLoader(GLTFLoader, `${import.meta.env.VITE_MODEL_PATH}/hand dryer.gltf`);
+  const handDryer = useLoader(
+    GLTFLoader,
+    `${import.meta.env.VITE_MODEL_PATH}/hand dryer.gltf`
+  );
   const tolietRollHanlder = useLoader(
     GLTFLoader,
     `${import.meta.env.VITE_MODEL_PATH}/toilet roll handler.gltf`
   );
-  const toiletPaper = useLoader(GLTFLoader, `${import.meta.env.VITE_MODEL_PATH}/toilet paper.gltf`);
-  const flushValve = useLoader(GLTFLoader, `${import.meta.env.VITE_MODEL_PATH}/flush valve.gltf`);
+  tolietRollHanlder.scene.traverse((child) => {
+    if (child.isMesh) {
+      child.material.map = panelsTexture;
+      child.material.needsUpdate = true;
+      child.material.roughness = 0;
+      child.material.metalness = 0.5;
+    }
+  });
+  const toiletPaper = useLoader(
+    GLTFLoader,
+    `${import.meta.env.VITE_MODEL_PATH}/toilet paper.gltf`
+  );
+  const flushValve = useLoader(
+    GLTFLoader,
+    `${import.meta.env.VITE_MODEL_PATH}/flush valve.gltf`
+  );
   backPanels.scene.traverse((child) => {
     if (child.isMesh) {
       child.material.map = colorMap;
@@ -141,9 +207,11 @@ const Scene = (props: any) => {
     }
   });
   vaniety.nodes["3DGeom-29"].receiveShadow = true;
-  vaniety.scene.traverse((child) => {
+  console.log(vaniety);
+  vaniety.scene.traverse((child: any) => {
     if (child.isMesh) {
       child.material.map = tiles;
+      child.attach = "material";
       child.material.needsUpdate = true;
       child.material.roughness = 0;
       child.material.metalness = 0.5;
@@ -153,6 +221,14 @@ const Scene = (props: any) => {
   // vaniety.nodes["3DGeom-29"].castShadow = true;
   waterTab.nodes["3DGeom-36"].castShadow = true;
   waterTab.nodes["3DGeom-37"].castShadow = true;
+  waterTab.scene.traverse((child) => {
+    if (child.isMesh) {
+      child.material.map = panelsTexture;
+      child.material.needsUpdate = true;
+      child.material.roughness = 0;
+      child.material.metalness = 0.5;
+    }
+  });
   waterTab.nodes["3DGeom-38"].castShadow = true;
   toiletPaper.nodes["3DGeom-13"].castShadow = true;
   wallRightGltf.nodes["3DGeom-12"].receiveShadow = true;
@@ -200,8 +276,8 @@ const Scene = (props: any) => {
 
   return (
     <>
-      <group position={[-1, 0, 2]}>
-        {/* <mesh
+      {/* <group position={[-1, 0, 2]}>
+         <mesh
          
           parent={mesh.parent}
           // position={[0.3, 2, -2]}
@@ -236,8 +312,8 @@ const Scene = (props: any) => {
             // color="#050505"
             // metalness={0.5}
           ></MeshReflectorMaterial>
-        </mesh> */}
-      </group>
+        </mesh> 
+      </group> */}
 
       <group position={[-1, 0, 2]}>
         <mesh castShadow>

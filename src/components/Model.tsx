@@ -1,59 +1,53 @@
-// import React, { useRef } from "react";
-// import { useGLTF, useTexture } from "@react-three/drei";
-// import { useFrame } from "@react-three/fiber";
+// @ts-nocheck
+import { MeshPortalMaterial, useTexture } from "@react-three/drei";
+import { useLoader } from "@react-three/fiber";
+import { useRef } from "react";
+import { MTLLoader, OBJLoader } from "three/examples/jsm/Addons.js";
+import * as THREE from "three";
+export default function Model() {
+  const objRef = useRef();
+  const materials = useLoader(
+    MTLLoader,
+    `${import.meta.env.VITE_MODEL_PATH2}/14.08.2024_Blank Superloo_Material Update_R0.mtl`
+  );
+  const tiles = useTexture(
+    `${
+      import.meta.env.VITE_MODEL_PATH2
+    }/14.08.2024_Blank Superloo_Material Update_R0/_10.jpg`
+  );
 
-// export function Model(props) {
-//   const group = useRef();
-//   const { nodes, materials } = useGLTF("/Blank Superloo.glb");
-//   const colorMap = useTexture("/textures/your-texture.jpg");
+  const obj = useLoader(
+    OBJLoader,
+    `${import.meta.env.VITE_MODEL_PATH2}/14.08.2024_Blank Superloo_Material Update_R0.obj`,
+    (loader) => {
+      materials.preload(); // Preload the materials
+      console.log(loader);
+      loader.setMaterials(materials); // Set the materials to the OBJLoader
+    }
+  );
 
-//   // Traverse the scene to apply the texture to all meshes
-//   Object.values(nodes).forEach((node) => {
-//     if (node.isMesh) {
-//       node.material.map = colorMap;
-//       node.material.needsUpdate = true;
-//     }
-//   });
+  //    obj.children[55].material.map=tiles
+  //    obj.children[55].material;
 
-//   return (
-//     <group ref={group} {...props} dispose={null}>
-//       <mesh
-//         geometry={nodes.Floor.geometry}
-//         material={nodes.Floor.material}
-//         position={[0, 0, 0]}
-//       />
-//       <mesh
-//         geometry={nodes.Wall.geometry}
-//         material={nodes.Wall.material}
-//         position={[0, 5, 0]}
-//       />
-//       <mesh
-//         geometry={nodes.MirrorVanity.geometry}
-//         material={nodes.MirrorVanity.material}
-//         position={[1, 4, -2]}
-//       />
-//       <mesh
-//         geometry={nodes.Panel.geometry}
-//         material={nodes.Panel.material}
-//         position={[2, 2, -1]}
-//       />
-//       <mesh
-//         geometry={nodes.Light.geometry}
-//         material={nodes.Light.material}
-//         position={[0, 8, 0]}
-//       />
-//       <mesh
-//         geometry={nodes.ToiletBowl.geometry}
-//         material={nodes.ToiletBowl.material}
-//         position={[-1, 1, -1]}
-//       />
-//       <mesh
-//         geometry={nodes.UnderPanel.geometry}
-//         material={nodes.UnderPanel.material}
-//         position={[0, 0, -2]}
-//       />
-//     </group>
-//   );
-// }
-
-// useGLTF.preload("/Blank Superloo.glb");
+  console.log(obj.children[55].material);
+  if (obj.children[55]) {
+    obj.children[55].material[0].map = tiles;
+    obj.children[55].material[1].map = tiles;
+  }
+  console.log(obj.children[55]);
+  //  return
+  return (
+    <>
+      <primitive ref={objRef} object={obj} />;
+      <mesh geometry={obj.children[55].geometry}>
+        <meshStandardMaterial map={tiles}></meshStandardMaterial>
+      </mesh>
+      <mesh geometry={obj.children[36].geometry}>
+        <meshStandardMaterial map={tiles}></meshStandardMaterial>
+      </mesh>
+      <mesh geometry={obj.children[38].geometry}>
+        <meshStandardMaterial map={tiles}></meshStandardMaterial>
+      </mesh>
+    </>
+  );
+}
