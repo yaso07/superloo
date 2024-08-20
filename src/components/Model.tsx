@@ -28,7 +28,7 @@ export default function Model() {
   });
   // 41,46,49
   const panel = useTexture(
-    `${import.meta.env.VITE_MODEL_PATH2}/demo/Brass_01__Stainless.png`
+    `/MODEL DEMO/demo/Brass_01__Stainless.png`
   );
   const floorTiles = useTexture(floorFilteredData[0].image);
 
