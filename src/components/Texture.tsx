@@ -1,5 +1,5 @@
  
-import { floors,vanityImages } from "../data";
+import { floors,vanityImages } from "../components/data";
 import { useMyContext } from "../Context";
 
 const Texture = () => {
