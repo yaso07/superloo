@@ -57,7 +57,7 @@ export default function Model() {
       import.meta.env.VITE_MODEL_PATH2
     }/14.08.2024_Blank Superloo_Material Update_R0.mtl`
   );
-  const tiles = useTexture(`${import.meta.env.VITE_MODEL_PATH2}/demo/_1.jpg`);
+  const tiles = useTexture(`/MODEL DEMO/demo/_1.jpg`);
 
   const obj = useLoader(
     OBJLoader,
