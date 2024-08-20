@@ -1,8 +1,8 @@
-import floor1 from "/MODEL DEMO/demo/wall.jpg";
-import floor2 from "/MODEL DEMO/demo/floor.jpg";
-import floor3 from "/MODEL DEMO/demo/Wall2.jpg";
-import tiles from "/MODEL DEMO/demo/vanity.jpg";
-import tiles2 from "/MODEL DEMO/demo/vanity copy.jpg";
+const floor1 = "/MODEL DEMO/demo/wall.jpg"
+const floor2 ="/MODEL DEMO/demo/floor.jpg"
+const floor3 ="/MODEL DEMO/demo/Wallpaper_20.jpg"
+const tiles ="/MODEL DEMO/demo/vanity.jpg"
+const tiles2 = "/MODEL DEMO/demo/vanity copy.jpg"
 // import tiles3 from "../public/MODEL DEMO/demo/wall2.jpg";
 
 export const floors = [
@@ -15,9 +15,10 @@ export const floors = [
     image: floor2,
   },
   {
-    id: 3,
-    image: floor3,
-  },
+     id:3,
+     image:floor3
+  }
+   
 ];
 export const vanityImages = [
   {
