@@ -1,8 +1,8 @@
-import floor1 from "./../../MODEL DEMO/demo/wall.jpg";
-import floor2 from "./../../MODEL DEMO/demo/floor.jpg";
-import floor3 from "./../../MODEL DEMO/demo/Wall2.jpg";
-import tiles from "./../../MODEL DEMO/demo/vanity.jpg";
-import tiles2 from "./../../MODEL DEMO/demo/vanity copy.jpg";
+import floor1 from "/MODEL DEMO/demo/wall.jpg";
+import floor2 from "/MODEL DEMO/demo/floor.jpg";
+import floor3 from "/MODEL DEMO/demo/Wall2.jpg";
+import tiles from "/MODEL DEMO/demo/vanity.jpg";
+import tiles2 from "/MODEL DEMO/demo/vanity copy.jpg";
 // import tiles3 from "../public/MODEL DEMO/demo/wall2.jpg";
 
 export const floors = [
