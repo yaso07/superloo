@@ -12,7 +12,7 @@ import { useEffect, useMemo, useRef } from "react";
 import { MTLLoader, OBJLoader } from "three/examples/jsm/Addons.js";
 import * as THREE from "three";
 import { useMyContext } from "../Context";
-import { floors, vanityImages } from "../data";
+import { floors, vanityImages } from "../components/data";
 import { Reflector } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 export default function Model() {
