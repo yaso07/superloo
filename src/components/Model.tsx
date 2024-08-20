@@ -53,15 +53,13 @@ export default function Model() {
   const objRef = useRef();
   const materials = useLoader(
     MTLLoader,
-    `${
-      import.meta.env.VITE_MODEL_PATH2
-    }/14.08.2024_Blank Superloo_Material Update_R0.mtl`
+    `/MODEL DEMO/14.08.2024_Blank Superloo_Material Update_R0.mtl`
   );
   const tiles = useTexture(`/MODEL DEMO/demo/_1.jpg`);
 
   const obj = useLoader(
     OBJLoader,
-       `${import.meta.env.VITE_MODEL_PATH2}/14.08.2024_Blank Superloo_Material Update_R0.obj`,
+       `/MODEL DEMO/14.08.2024_Blank Superloo_Material Update_R0.obj`,
     (loader) => {
       materials.preload(); // Preload the materials
       console.log(loader);
