@@ -1,18 +1,24 @@
-import { Canvas } from "@react-three/fiber";
+// @ts-nocheck
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import "./App.css";
 import { Suspense, useRef } from "react";
- 
-import { PointLight} from "three";
+
+import { PointLight, PointLightHelper } from "three";
 import {
+  Environment,
   OrbitControls,
+  PointerLockControls,
   Shadow,
- 
+  useHelper,
 } from "@react-three/drei";
 import Model from "./components/Model";
+import Texture from "./components/Texture";
+import { rotate } from "three/webgpu";
+import PointerControls from "./components/PointerLock";
 
 function LightScene(props: any) {
   const pointLightRef = useRef<PointLight>(null!);
-  // useHelper(pointLightRef, THREE.PointLightHelper, 1,"red");
+  // useHelper(pointLightRef, PointLightHelper, 1,"red");
   // const { distance, shadowBias } = useControls({
   //   intensity: { value: 50, max: 300, min: 0 },
   //   angle: { value: Math.PI / 6, min: 0, max: 20 },
@@ -23,19 +29,20 @@ function LightScene(props: any) {
   return (
     <>
       <pointLight
-        
+        castShadow={false}
+        receiveShadow={false}
         scale={0.1}
         ref={pointLightRef}
-        position={[0, 4.1, 0]}
-        intensity={20}
+        position={[0.2, 4.1, -0.5]}
+        intensity={1}
         distance={7.2}
-        // shadow-bias={}
-        // shadow-mapSize={2048}
+        shadow-bias={-0.001}
+        shadow-mapSize={2048}
         // shadow-mapSize-width={1024}
         // shadow-mapSize-height={1020}
-        // shadow-bottom={10}
-        // shadow-radius={10}
-        // angle={10}
+        shadow-bottom={10}
+        shadow-radius={10}
+        angle={10}
         {...props}
       >
         {/* <orthographicCamera
@@ -85,99 +92,83 @@ function App() {
 
   return (
     <>
-      <Suspense fallback={<h1>loading</h1>}>
-        <Canvas
-          shadows
-          camera={{ position: [1.5, 3, 5] }}
-          style={{ height: "90vh", backgroundColor: "white" }}
-        >
-          {/* <ambientLight intensity={10} /> */}
-          {/* <spotLight
+      <div style={{ display: "flex" }}>
+        <Suspense fallback={<div style={{ width: "100%" }}>loading</div>}>
+          <Canvas
+            id="canvas"
+            shadows
+            camera={{ position: [1.5, 0, 4], near: 0.001, far: 100 }}
+            style={{ height: "100vh", width: "100%", backgroundColor: "white" }}
+          >
+            {/* <ambientLight intensity={10} /> */}
+            {/* <spotLight
           position={[1, 4.9, -4]}
           
           angle={90}
           penumbra={1}
           intensity={20}
         /> */}
-          {/* <Environment background files="public/textures/1.hdr"></Environment> */}
-          {/* position={[-0.3, -2.4, -0.5]} */}
-          <group position={[0, -1.5, 0]}>
-            <fog attach="fog" args={["black", 0, 40]} />
-            {/* {enabled && <SoftShadows {...config} />} */}
-            <LightScene></LightScene>
-            <LightScene position={[0.2, 1, 2.1]} intensity={5}></LightScene>
-            <Shadow
-              color="white"
-              colorStop={0}
-              opacity={0.5}
-              fog={false} // Reacts to fog (default=false)
-            />
-            <LightScene
-              castShadow={false}
-              intensity={5}
-              position={[0, 4.1, 1.2]}
-            ></LightScene>
-            {/* <LightScene
-              castShadow={false}
-              intensity={2}
-              position={[0, 0, 0.1]}
-            ></LightScene> */}
+            {/* <Environment background files="public/textures/1.hdr"></Environment> */}
+            {/* position={[-0.3, -2.4, -0.5]} */}
+            <group castShadow receiveShadow position={[0, -1.5, 0]}>
+              <fog attach="fog" args={["black", 0, 40]} />
+              {/* {enabled && <SoftShadows {...config} />} */}
+              <LightScene castShadow></LightScene>
+              <LightScene
+                castShadow={false}
+                position={[0.2, 2.5, 0.5]}
+                intensity={1.5}
+              ></LightScene>
+              <Shadow
+                color="white"
+                colorStop={0}
+                opacity={0.5}
+                fog={false} // Reacts to fog (default=false)
+              />
+              <LightScene
+                castShadow
+                intensity={5}
+                position={[0.137, 4.18, -0.1]}
+              ></LightScene>
+              <LightScene intensity={3} position={[0.2, 3, 3]}></LightScene>
+              <LightScene intensity={1} position={[0.5, 0.9, 1]}></LightScene>
 
-            {/* <DirectionalLight></DirectionalLight> */}
-            {/* <Model position={[-1, 0, 2]} roughness={0} metalness={10} /> */}
-            {/* <Scene></Scene> */}
-            <group position={[-1, 0, 2]} scale={0.0017}>
+              {/* <DirectionalLight></DirectionalLight> */}
+              {/* <Model position={[-1, 0, 2]} roughness={0} metalness={10} /> */}
+              {/* <Scene></Scene> */}
+
               <Model></Model>
+
+              {/* <mesh position={[0, 0, 0]}>
+                <boxGeometry args={[2, 2]}></boxGeometry>
+                <meshStandardMaterial
+                  roughness={1}
+                  metalness={1}
+                ></meshStandardMaterial>
+              </mesh> */}
+              {/* <CameraRig></CameraRig> */}
             </group>
 
-            {/* <CameraRig></CameraRig> */}
-          </group>
-          /*{" "}
-          <group>
-            {/* <mesh position={[0, 1, 0]}>
-            <boxGeometry args={[1, 1, 1]} />
-            <meshStandardMaterial color="red" />
-          </mesh> */}
-            {/* <mesh scale-x={0.1} scale-y={0.7} rotation-y={1.50} >
-            <planeGeometry args={[6, 6]}> </planeGeometry>
-            <MeshReflectorMaterial
-              // resolution={1024}
-              color="gray"
-              blur={[1000, 1000]}
-              mixBlur={1}
-              mirror={3}
-              // mixStrength={1}
-              depthToBlurRatioBias={0.5}
-              // blur={[300, 100]}
-              resolution={2048}
-              // mixBlur={1}
-              mixStrength={80}
-              roughness={1}
-              depthScale={1.2}
-              minDepthThreshold={0.4}
-              maxDepthThreshold={1.4}
-              // color="#050505"
-              metalness={0.5}
-            ></MeshReflectorMaterial>
-          </mesh> */}
-          </group>
-          {/* <PointerLockControls /> */}
-          <OrbitControls></OrbitControls>
-          {/* <axesHelper args={[10]} />
-          <gridHelper></gridHelper> */}
-        </Canvas>
-      </Suspense>
+            {/* <PointerControls /> */}
+            <OrbitControls></OrbitControls>
+            {/* {/* <axesHelper args={[10]} /> */}
+            {/* <gridHelper></gridHelper>  */}
+          </Canvas>
+        </Suspense>
+
+        <Texture></Texture>
+      </div>
     </>
   );
 }
 
-// const CameraRig = () => {
-//   const { camera } = useThree();
-//   camera.position.set(0, 0, 0); // Set camera height to eye level (1.6 meters above the ground)
+const CameraRig = () => {
+  const { camera } = useThree();
+  camera.position.set(0, 0.5, 2); // Set camera height to eye level (1.6 meters above the ground)
 
-//   useFrame(() => {
-//     // Any custom camera updates can go here
-//   });
-//   return null;
-// };
+  useFrame(() => {
+    camera.add;
+  });
+  return null;
+};
 export default App;
