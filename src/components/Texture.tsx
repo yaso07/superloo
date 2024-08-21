@@ -1,5 +1,5 @@
  
-import { floors,vanityImages } from "../components/data";
+import { floors,vanityImages, walls } from "../components/data";
 import { useMyContext } from "../Context";
 
 const Texture = () => {
@@ -49,7 +49,7 @@ const Texture = () => {
           flexWrap: "wrap",
         }}
       >
-        {floors.reverse().map((item: any,index) => {
+        {walls.reverse().map((item: any,index) => {
           return (
             <div
               key={index}

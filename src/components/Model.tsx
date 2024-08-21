@@ -7,12 +7,12 @@ import {
   useHelper,
   useTexture,
 } from "@react-three/drei";
-import { useLoader } from "@react-three/fiber";
+import { useLoader, useThree } from "@react-three/fiber";
 import { useEffect, useMemo, useRef } from "react";
 import { MTLLoader, OBJLoader } from "three/examples/jsm/Addons.js";
 import * as THREE from "three";
 import { useMyContext } from "../Context";
-import { floors, vanityImages } from "../components/data";
+import { floors, vanityImages, walls } from "../components/data";
 import { Reflector } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 export default function Model() {
@@ -20,16 +20,14 @@ export default function Model() {
   const floorFilteredData = floors.filter((item) => {
     return item.id === floor;
   });
-  const wallFilteredData = floors.filter((item) => {
+  const wallFilteredData = walls.filter((item) => {
     return item.id === wall;
   });
   const vanityFilteredData = vanityImages.filter((item) => {
     return item.id === vanity;
   });
   // 41,46,49
-  const panel = useTexture(
-    `/MODEL DEMO/demo/Brass_01__Stainless.png`
-  );
+  const panel = useTexture(`/MODEL DEMO/demo/Brass_01__Stainless.png`);
   const floorTiles = useTexture(floorFilteredData[0].image);
 
   floorTiles.repeat.set(1, 1);
@@ -41,7 +39,7 @@ export default function Model() {
   wallTiles.wrapT = THREE.RepeatWrapping;
   const vanityTiles = useTexture(vanityFilteredData[0].image);
 
-  vanityTiles.repeat.set(1,1);
+  vanityTiles.repeat.set(1, 1);
   vanityTiles.wrapS = THREE.RepeatWrapping;
   vanityTiles.wrapT = THREE.RepeatWrapping;
 
@@ -59,7 +57,7 @@ export default function Model() {
 
   const obj = useLoader(
     OBJLoader,
-       `/MODEL DEMO/14.08.2024_Blank Superloo_Material Update_R0.obj`,
+    `/MODEL DEMO/14.08.2024_Blank Superloo_Material Update_R0.obj`,
     (loader) => {
       materials.preload(); // Preload the materials
       console.log(loader);
@@ -115,7 +113,7 @@ export default function Model() {
   console.log(obj.children[38]);
   const shape = new THREE.Shape();
 
-  const width = 0.80; // Width of the mirror
+  const width = 0.8; // Width of the mirror
   const height = 1.745; // Height of the mirror
   const radius = 0.48; // Radius for rounded corners
 
@@ -128,7 +126,12 @@ export default function Model() {
     -height / 1.92 + radius
   );
   shape.lineTo(width / 2, height / 2 - radius);
-  shape.quadraticCurveTo(width / 2.53, height / 1.90, width / 2 - radius, height / 2);
+  shape.quadraticCurveTo(
+    width / 2.53,
+    height / 1.9,
+    width / 2 - radius,
+    height / 2
+  );
   shape.lineTo(-width / 2 + radius, height / 2);
   shape.quadraticCurveTo(
     -width / 2.53,
@@ -141,13 +144,27 @@ export default function Model() {
     -width / 2.53,
     -height / 1.92,
     -width / 1.92 + radius,
-    -height /2
+    -height / 2
   );
 
   const extrudeSettings = {
     depth: 0, // Thickness of the mirror
     bevelEnabled: false,
   };
+
+  const { scene, camera } = useThree();
+
+  // Create references for meshes
+  const glowingSphere = useRef();
+
+  useEffect(() => {
+    // Assign layer 1 to the glowingSphere
+    glowingSphere.current.layers.set(1);
+    // Assign layer 0 (default) to the regularBox
+
+    // Ensure the camera renders both layers
+    camera.layers.enable(1);
+  }, [camera]);
 
   return (
     <>
@@ -163,6 +180,12 @@ export default function Model() {
         })}
         <mesh geometry={obj.children[38].geometry}>
           <meshPhongMaterial map={tiles}></meshPhongMaterial>
+        </mesh>
+        <mesh ref={glowingSphere} geometry={obj.children[4].geometry}>
+          <meshStandardMaterial emissive="white" emissiveIntensity={2} />
+        </mesh>
+        <mesh ref={glowingSphere} geometry={obj.children[2].geometry}>
+          <meshStandardMaterial emissive="white" emissiveIntensity={4} />
         </mesh>
         <mesh receiveShadow geometry={obj.children[13].geometry}>
           <meshPhongMaterial map={floorTiles}></meshPhongMaterial>
@@ -216,7 +239,12 @@ export default function Model() {
           metalness={1}
         ></meshStandardMaterial>
       </mesh> */}
-      <mesh position={[-1.13, 2.920, 0.523]} rotation-y={1.57} rotation-x={-0.025} scale-y={0.76}>
+      <mesh
+        position={[-1.13, 2.92, 0.523]}
+        rotation-y={1.57}
+        rotation-x={-0.025}
+        scale-y={0.76}
+      >
         <extrudeGeometry attach="geometry" args={[shape, extrudeSettings]} />
         <MeshReflectorMaterial
           // resolution={1024}
@@ -242,6 +270,40 @@ export default function Model() {
       {/* <mesh ref={mesh} geometry={OvalGeometry(2, 4)}>
         <meshStandardMaterial color="#c0c0c0" metalness={0.6} roughness={0.1} />
       </mesh> */}
+    </>
+  );
+}
+
+function Scene() {
+  const { scene, camera } = useThree();
+
+  // Create references for meshes
+  const glowingSphere = useRef();
+  const regularBox = useRef();
+
+  useEffect(() => {
+    // Assign layer 1 to the glowingSphere
+    glowingSphere.current.layers.set(1);
+    // Assign layer 0 (default) to the regularBox
+    regularBox.current.layers.set(0);
+
+    // Ensure the camera renders both layers
+    camera.layers.enable(1);
+  }, [camera]);
+
+  return (
+    <>
+      {/* Glowing Sphere - Will have bloom */}
+      {/* <Sphere ref={glowingSphere} args={[1, 1, 2]} position={[-0.4, 2, 0]}>
+        <meshStandardMaterial emissive="white" emissiveIntensity={2} />
+      </Sphere> */}
+
+      {/* Regular Box - Will not have bloom */}
+      {/* <Box ref={regularBox} args={[1, 1, 1]} position={[2, 0, 0]}>
+        <meshStandardMaterial color="blue" />
+      </Box> */}
+
+      {/* Lighting */}
     </>
   );
 }

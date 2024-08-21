@@ -11,7 +11,7 @@ interface Props {
 
 const Context = createContext<any>(undefined);
 const MyProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [floor, setFloor] = useState(2);
+  const [floor, setFloor] = useState(1);
   const [wall, setWall] = useState(1);
   const [vanity,setVanity]=useState(1)
   const handleFloor = (id: any) => {

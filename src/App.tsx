@@ -1,14 +1,16 @@
 // @ts-nocheck
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import "./App.css";
-import { Suspense, useRef } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import { HashLoader } from "react-spinners";
 import { PointLight, PointLightHelper } from "three";
 import {
+  Box,
   Environment,
   OrbitControls,
   PointerLockControls,
   Shadow,
+  Sphere,
   useHelper,
 } from "@react-three/drei";
 import Model from "./components/Model";
@@ -33,7 +35,7 @@ function LightScene(props: any) {
         receiveShadow={false}
         scale={0.1}
         ref={pointLightRef}
-        position={[0.2, 4.1, -0.5]}
+        position={[0.2, 3, -0.5]}
         intensity={1}
         distance={7.2}
         shadow-bias={-0.001}
@@ -140,10 +142,10 @@ function App() {
               />
               <LightScene
                 castShadow
-                intensity={5}
-                position={[0.137, 4.18, -0.1]}
+                intensity={1}
+                position={[0.137, 3, -0.1]}
               ></LightScene>
-              <LightScene intensity={3} position={[0.2, 3, 3]}></LightScene>
+              <LightScene intensity={1} position={[0.2, 3, 3]}></LightScene>
               <LightScene intensity={1} position={[0.5, 0.9, 1]}></LightScene>
 
               {/* <DirectionalLight></DirectionalLight> */}
@@ -161,9 +163,8 @@ function App() {
               </mesh> */}
               <CameraRig></CameraRig>
             </group>
-
             <PointerControls />
-            {/* <OrbitControls enableZoom={false}></OrbitControls> */}
+            {/* <OrbitControls></OrbitControls> */}
             {/* {/* <axesHelper args={[10]} /> */}
             {/* <gridHelper></gridHelper>  */}
           </Canvas>
@@ -178,7 +179,7 @@ function App() {
 const CameraRig = () => {
   const { camera } = useThree();
   camera.position.set(0.7, 1.1, 1.8); // Set camera height to eye level (1.6 meters above the ground)
- 
+
   useFrame(() => {
     camera.add;
   });
