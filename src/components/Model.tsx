@@ -216,7 +216,7 @@ export default function Model() {
           metalness={1}
         ></meshStandardMaterial>
       </mesh> */}
-      <mesh position={[-1.13, 2.93, 0.523]} rotation-y={1.57} scale-y={0.78}>
+      <mesh position={[-1.13, 2.920, 0.523]} rotation-y={1.57} scale-y={0.78}>
         <extrudeGeometry attach="geometry" args={[shape, extrudeSettings]} />
         <MeshReflectorMaterial
           // resolution={1024}

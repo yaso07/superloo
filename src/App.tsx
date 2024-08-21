@@ -164,8 +164,8 @@ function App() {
 
 const CameraRig = () => {
   const { camera } = useThree();
-  camera.position.set(0, 0.5, 2); // Set camera height to eye level (1.6 meters above the ground)
-
+  camera.position.set(-0.2, 1.1, 2.4); // Set camera height to eye level (1.6 meters above the ground)
+ 
   useFrame(() => {
     camera.add;
   });
