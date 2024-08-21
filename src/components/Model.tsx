@@ -115,33 +115,33 @@ export default function Model() {
   console.log(obj.children[38]);
   const shape = new THREE.Shape();
 
-  const width = 0.82; // Width of the mirror
-  const height = 1.7; // Height of the mirror
-  const radius = 0.485; // Radius for rounded corners
+  const width = 0.80; // Width of the mirror
+  const height = 1.745; // Height of the mirror
+  const radius = 0.48; // Radius for rounded corners
 
   shape.moveTo(-width / 2 + radius, -height / 2);
   shape.lineTo(width / 2 - radius, -height / 2);
   shape.quadraticCurveTo(
-    width / 2,
-    -height / 2,
-    width / 2,
-    -height / 2 + radius
+    width / 2.2,
+    -height / 1.92,
+    width / 1.92,
+    -height / 1.92 + radius
   );
   shape.lineTo(width / 2, height / 2 - radius);
-  shape.quadraticCurveTo(width / 2, height / 2, width / 2 - radius, height / 2);
+  shape.quadraticCurveTo(width / 2.53, height / 1.90, width / 2 - radius, height / 2);
   shape.lineTo(-width / 2 + radius, height / 2);
   shape.quadraticCurveTo(
-    -width / 2,
-    height / 2,
-    -width / 2,
-    height / 2 - radius
+    -width / 2.53,
+    height / 1.92,
+    -width / 1.92,
+    height / 1.92 - radius
   );
   shape.lineTo(-width / 2, -height / 2 + radius);
   shape.quadraticCurveTo(
-    -width / 2,
-    -height / 2,
-    -width / 2 + radius,
-    -height / 2
+    -width / 2.53,
+    -height / 1.92,
+    -width / 1.92 + radius,
+    -height /2
   );
 
   const extrudeSettings = {
@@ -216,7 +216,7 @@ export default function Model() {
           metalness={1}
         ></meshStandardMaterial>
       </mesh> */}
-      <mesh position={[-1.13, 2.920, 0.523]} rotation-y={1.57} scale-y={0.78}>
+      <mesh position={[-1.13, 2.920, 0.523]} rotation-y={1.57} rotation-x={-0.025} scale-y={0.76}>
         <extrudeGeometry attach="geometry" args={[shape, extrudeSettings]} />
         <MeshReflectorMaterial
           // resolution={1024}

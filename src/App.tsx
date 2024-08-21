@@ -2,7 +2,7 @@
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import "./App.css";
 import { Suspense, useRef } from "react";
-
+import { HashLoader } from "react-spinners";
 import { PointLight, PointLightHelper } from "three";
 import {
   Environment,
@@ -93,7 +93,20 @@ function App() {
   return (
     <>
       <div style={{ display: "flex" }}>
-        <Suspense fallback={<div style={{ width: "100%" }}>loading</div>}>
+        <Suspense
+          fallback={
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <HashLoader color="#6DC6AE" />
+            </div>
+          }
+        >
           <Canvas
             id="canvas"
             shadows
