@@ -146,11 +146,11 @@ function App() {
                   metalness={1}
                 ></meshStandardMaterial>
               </mesh> */}
-              {/* <CameraRig></CameraRig> */}
+              <CameraRig></CameraRig>
             </group>
 
-            {/* <PointerControls /> */}
-            <OrbitControls></OrbitControls>
+            <PointerControls />
+            {/* <OrbitControls enableZoom={false}></OrbitControls> */}
             {/* {/* <axesHelper args={[10]} /> */}
             {/* <gridHelper></gridHelper>  */}
           </Canvas>
