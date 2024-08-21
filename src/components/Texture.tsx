@@ -68,7 +68,7 @@ const Texture = () => {
           );
         })}
       </div>
-      <div style={{ fontSize: "30px", marginTop: "10px" }}>vaniety</div>
+      <div style={{ fontSize: "30px", marginTop: "10px" }}>Vanity</div>
       <div
         style={{
           display: "flex",
