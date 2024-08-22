@@ -34,7 +34,7 @@ export default function Model() {
   floorTiles.wrapS = THREE.RepeatWrapping;
   floorTiles.wrapT = THREE.RepeatWrapping;
   const wallTiles = useTexture(wallFilteredData[0].image);
-  wallTiles.repeat.set(1, 1);
+  wallTiles.repeat.set(4, 4);
   wallTiles.wrapS = THREE.RepeatWrapping;
   wallTiles.wrapT = THREE.RepeatWrapping;
   const vanityTiles = useTexture(vanityFilteredData[0].image);
