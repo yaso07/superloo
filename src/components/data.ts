@@ -14,11 +14,11 @@ export const floors = [
 export const walls = [
   {
     id: 1,
-    image: floor1,
+    image: floor3,
   },
   {
     id: 2,
-    image: floor3,
+    image: floor1,
   },
 ];
 export const vanityImages = [

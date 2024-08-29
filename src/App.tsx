@@ -147,7 +147,7 @@ function App() {
           <Canvas
             id="canvas"
             shadows
-            camera={{ position: [1.5, 0, 4], near: 0.001, far: 100 }}
+            camera={{ position: [0, 1.1, 1.8], near: 0.001, far: 100 }}
             style={{ height: "100vh", width: "100%", backgroundColor: "white" }}
           >
             {/* <ambientLight intensity={10} /> */}
@@ -311,10 +311,10 @@ function App() {
                   metalness={1}
                 ></meshStandardMaterial>
               </mesh> */}
-              <CameraRig></CameraRig>
+                  <CameraRig></CameraRig>
             </group>
             <PointerControls />
-            {/* <OrbitControls></OrbitControls> */}
+      {/*       <OrbitControls></OrbitControls>*/}
             {/* {/* <axesHelper args={[10]} /> */}
             {/* <gridHelper></gridHelper>  */}
           </Canvas>
