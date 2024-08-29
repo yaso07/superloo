@@ -201,12 +201,15 @@ export default function Model() {
         <mesh receiveShadow geometry={obj.children[13].geometry}>
           <meshPhongMaterial map={floorTiles}></meshPhongMaterial>
         </mesh>
+        <mesh receiveShadow geometry={obj.children[7].geometry}>
+          <meshPhongMaterial></meshPhongMaterial>
+        </mesh>
         <mesh geometry={obj.children[39].geometry}>
           <meshPhongMaterial map={tiles}></meshPhongMaterial>
         </mesh>
-        <mesh geometry={obj.children[17].geometry}>
-          <meshLambertMaterial map={steel}></meshLambertMaterial>
-        </mesh>
+        {/* <mesh geometry={obj.children[17].geometry}>
+          <meshPhongMaterial map={steel}></meshPhongMaterial>
+        </mesh> */}
         {/* {panels.map((item) => {
           return (
             <mesh geometry={obj.children[item].geometry}>

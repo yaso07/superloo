@@ -15,7 +15,7 @@ const Demo = () => {
     return item.id === wall;
   });
   const wallTiles = useTexture(wallFilteredData[0].image);
-  wallTiles.repeat.set(13, 13);
+  wallTiles.repeat.set(15, 18);
   wallTiles.wrapS = THREE.RepeatWrapping;
   wallTiles.wrapT = THREE.RepeatWrapping;
   wallTiles.rotation = Math.PI / 2;

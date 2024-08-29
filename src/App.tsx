@@ -40,7 +40,7 @@ function SpotLightScene(props: any) {
         castShadow
         intensity={4}
         ref={spotLightRef}
-        angle={1.8}
+        angle={1.9}
         position={[0, 4.28, 1]}
         distance={5}
         shadow-bias={-0.001}
@@ -147,7 +147,7 @@ function App() {
           <Canvas
             id="canvas"
             shadows
-            camera={{ position: [1.5, 0, 4], near: 0.001, far: 100 }}
+            camera={{ position: [1.6, 0, 3.5], near: 0.001, far: 100 }}
             style={{ height: "100vh", width: "100%", backgroundColor: "white" }}
           >
             {/* <ambientLight intensity={10} /> */}
@@ -160,7 +160,7 @@ function App() {
         /> */}
             {/* <Environment background files="public/textures/1.hdr"></Environment> */}
             {/* position={[-0.3, -2.4, -0.5]} */}
-            <group castShadow receiveShadow position={[0, -1.5, 0]}>
+            <group castShadow receiveShadow position={[0.5, -1.8, 0]}>
               <fog attach="fog" args={["black", 0, 40]} />
               {/* {enabled && <SoftShadows {...config} />} */}
               <LightScene castShadow></LightScene>
@@ -311,10 +311,10 @@ function App() {
                   metalness={1}
                 ></meshStandardMaterial>
               </mesh> */}
-              <CameraRig></CameraRig>
+              {/* <CameraRig></CameraRig> */}
             </group>
-            <PointerControls />
-            {/* <OrbitControls></OrbitControls> */}
+            {/* <PointerControls /> */}
+            <OrbitControls></OrbitControls>
             {/* {/* <axesHelper args={[10]} /> */}
             {/* <gridHelper></gridHelper>  */}
           </Canvas>
