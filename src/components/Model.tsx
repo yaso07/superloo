@@ -16,12 +16,12 @@ import { floors, vanityImages, walls } from "../components/data";
 import { Reflector } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 export default function Model() {
-  const { floor, wall, vanity } = useMyContext();
+  const { floor, vanity } = useMyContext();
   const floorFilteredData = floors.filter((item) => {
     return item.id === floor;
   });
   const wallFilteredData = walls.filter((item) => {
-    return item.id === wall;
+    return item.id === 1;
   });
   const vanityFilteredData = vanityImages.filter((item) => {
     return item.id === vanity;
@@ -34,9 +34,12 @@ export default function Model() {
   floorTiles.wrapS = THREE.RepeatWrapping;
   floorTiles.wrapT = THREE.RepeatWrapping;
   const wallTiles = useTexture(wallFilteredData[0].image);
-  wallTiles.repeat.set(1, 1);
+  wallTiles.repeat.set(2, 1);
+  wallTiles.rotation = Math.PI;
   wallTiles.wrapS = THREE.RepeatWrapping;
   wallTiles.wrapT = THREE.RepeatWrapping;
+  wallTiles.magFilter = THREE.LinearFilter;
+  wallTiles.minFilter = THREE.LinearFilter;
   const vanityTiles = useTexture(vanityFilteredData[0].image);
 
   vanityTiles.repeat.set(1, 1);
@@ -54,6 +57,7 @@ export default function Model() {
     `/MODEL DEMO/14.08.2024_Blank Superloo_Material Update_R0.mtl`
   );
   const tiles = useTexture(`/MODEL DEMO/demo/_1.jpg`);
+  const steel = useTexture(`/MODEL DEMO/demo/Brass_01__Stainless.png`);
 
   const obj = useLoader(
     OBJLoader,
@@ -66,17 +70,23 @@ export default function Model() {
   );
   //    obj.children[55].material.map=tiles
   //    obj.children[55].material;
+
+  obj.children[54] = new THREE.Mesh();
+  obj.children[54].name = "wall";
+  console.log(obj.children[54]);
   obj.children.map((item) => {
-    item.castShadow = true;
-    item.receiveShadow = true;
+    if (item.name != "wall") {
+      item.castShadow = true;
+      item.receiveShadow = true;
+    }
   });
 
-  if (obj.children[54]) {
-    obj.children[54].material[0].map = wallTiles;
-    obj.children[54].material[1].map = wallTiles;
+  // if (obj.children[54]) {
+  //   obj.children[54].material[0].map = wallTiles;
+  //   obj.children[54].material[1].map = wallTiles;
 
-    console.log(obj.children[13]);
-  }
+  //   console.log(obj.children[13]);
+  // }
   if (obj.children[13]) {
     obj.children[13].material[0].map = floorTiles;
     obj.children[13].material[1].map = floorTiles;
@@ -89,6 +99,8 @@ export default function Model() {
     // obj.children[13].material[1].map.color = "white";
     console.log(obj.children[34]);
   }
+  obj.children[17].material.reflectivity = 2;
+  obj.children[17].material.shininess = 100;
   const mesh: any = [55, 36, 38];
   const panels = [32, 33, 50, 51, 52, 35, 53];
 
@@ -100,9 +112,8 @@ export default function Model() {
   mesh.forEach((elem) => {
     obj.children[elem].material.map = tiles;
     // obj.children[elem].material.map.color = "white";
-
-    console.log(obj.children[elem]);
   });
+
   const cubeCameraRef = useRef();
   useHelper(cubeCameraRef, THREE.CameraHelper, "red");
   useFrame(() => {
@@ -113,7 +124,7 @@ export default function Model() {
   console.log(obj.children[38]);
   const shape = new THREE.Shape();
 
-  const width = 0.8; // Width of the mirror
+  const width = 0.79; // Width of the mirror
   const height = 1.745; // Height of the mirror
   const radius = 0.48; // Radius for rounded corners
 
@@ -192,6 +203,9 @@ export default function Model() {
         </mesh>
         <mesh geometry={obj.children[39].geometry}>
           <meshPhongMaterial map={tiles}></meshPhongMaterial>
+        </mesh>
+        <mesh geometry={obj.children[17].geometry}>
+          <meshLambertMaterial map={steel}></meshLambertMaterial>
         </mesh>
         {/* {panels.map((item) => {
           return (

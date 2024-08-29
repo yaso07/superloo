@@ -3,7 +3,12 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import "./App.css";
 import { Suspense, useEffect, useRef } from "react";
 import { HashLoader } from "react-spinners";
-import { PointLight, PointLightHelper } from "three";
+import {
+  PointLight,
+  PointLightHelper,
+  SpotLight,
+  SpotLightHelper,
+} from "three";
 import {
   Box,
   Environment,
@@ -17,10 +22,41 @@ import Model from "./components/Model";
 import Texture from "./components/Texture";
 import { rotate } from "three/webgpu";
 import PointerControls from "./components/PointerLock";
+import Demo from "./components/Demo";
 
+function SpotLightScene(props: any) {
+  const spotLightRef = useRef<SpotLight>(null!);
+  // useHelper(spotLightRef, SpotLightHelper, "cyan");
+  // const { distance, shadowBias } = useControls({
+  //   intensity: { value: 50, max: 300, min: 0 },
+  //   angle: { value: Math.PI / 6, min: 0, max: 20 },
+  //   distance: { value: 7.2, min: 0, max: 20 },
+  //   shadowBias: { value: -0.005, min: -0.999, max: -0.005 },
+  // });
+
+  return (
+    <>
+      <spotLight
+        castShadow
+        intensity={5}
+        ref={spotLightRef}
+        angle={1.8}
+        position={[0, 4.28, 1]}
+        distance={5}
+        shadow-bias={-0.001}
+        shadow-mapSize={2048}
+      >
+        {/* <orthographicCamera
+          attach="shadow-camera"
+          args={[-10, 9, -8, 10, 1.2, 10]}
+        /> */}
+      </spotLight>
+    </>
+  );
+}
 function LightScene(props: any) {
   const pointLightRef = useRef<PointLight>(null!);
-  // useHelper(pointLightRef, PointLightHelper, 1,"red");
+  // useHelper(pointLightRef, PointLightHelper, 1, "red");
   // const { distance, shadowBias } = useControls({
   //   intensity: { value: 50, max: 300, min: 0 },
   //   angle: { value: Math.PI / 6, min: 0, max: 20 },
@@ -31,7 +67,6 @@ function LightScene(props: any) {
   return (
     <>
       <pointLight
-        castShadow={false}
         receiveShadow={false}
         scale={0.1}
         ref={pointLightRef}
@@ -140,20 +175,135 @@ function App() {
                 opacity={0.5}
                 fog={false} // Reacts to fog (default=false)
               />
-              <LightScene
+              {/* <LightScene
                 castShadow
                 intensity={1}
                 position={[0.137, 3, -0.1]}
-              ></LightScene>
-              <LightScene intensity={1} position={[0.2, 3, 3]}></LightScene>
-              <LightScene intensity={1} position={[0.5, 0.9, 1]}></LightScene>
-
+              ></LightScene> */}
+              <LightScene intensity={3} position={[0, 2, 3.5]}></LightScene>
+              {/* <LightScene intensity={1} position={[0.5, 0.9, 1]}></LightScene> */}
+              <group>
+                {/* <LightScene
+                  intensity={0.4}
+                  position={[0.3, 1.4, -0.5]}
+                ></LightScene> */}
+                <LightScene
+                  intensity={0.2}
+                  position={[-0.2, 0.8, -0.5]}
+                ></LightScene>
+                {/* <LightScene
+                  intensity={0.3}
+                  position={[-0.01, 0.6, -0.5]}
+                ></LightScene>
+                <LightScene
+                  intensity={0.3}
+                  position={[0.6, 0.6, -0.5]}
+                ></LightScene> */}
+                <LightScene
+                  intensity={0.2}
+                  position={[0.8, 0.8, -0.5]}
+                ></LightScene>
+                <LightScene
+                  intensity={0.5}
+                  position={[0.3, 0.6, 0.3]}
+                ></LightScene>
+                <LightScene
+                  intensity={0.6}
+                  position={[0.2, 0.8, 0.5]}
+                ></LightScene>
+                <LightScene
+                  intensity={0.2}
+                  position={[0.3, 0.8, 1.5]}
+                ></LightScene>
+                <LightScene
+                  intensity={0.9}
+                  position={[0.2, 0.8, 1.5]}
+                ></LightScene>
+                <LightScene
+                  intensity={0.9}
+                  position={[0.3, 0.8, 2.5]}
+                ></LightScene>
+                <LightScene
+                  intensity={0.9}
+                  position={[-0.4, 0.8, 2.5]}
+                ></LightScene>
+              </group>
+              {/* <group>
+                <LightScene
+                  intensity={0.2}
+                  position={[-0.5, 2.5, -0.5]}
+                ></LightScene>
+                <LightScene
+                  intensity={0.3}
+                  position={[0.4, 2.5, -0.5]}
+                ></LightScene>
+                <LightScene
+                  intensity={0.9}
+                  position={[0.4, 2.5, 0.5]}
+                ></LightScene>
+                <LightScene
+                  intensity={0.9}
+                  position={[-0.5, 2.5, 0.5]}
+                ></LightScene>
+                <LightScene
+                  intensity={0.9}
+                  position={[0.4, 2.5, 1.5]}
+                ></LightScene>
+                <LightScene
+                  intensity={0.4}
+                  position={[-0.5, 2.5, 1.5]}
+                ></LightScene>
+                <LightScene
+                  intensity={0.9}
+                  position={[0.4, 2.5, 2.5]}
+                ></LightScene>
+                <LightScene
+                  intensity={0.9}
+                  position={[-0.5, 2.5, 2.5]}
+                ></LightScene>
+              </group> */}
+              {/* <group>
+                <LightScene
+                 
+                  intensity={0.2}
+                  position={[-0.5, 3.2, -0.5]}
+                ></LightScene>
+                <LightScene
+                  intensity={0.2}
+                  position={[0.4, 3.2, -0.5]}
+                ></LightScene>
+                <LightScene
+                  intensity={0.2}
+                  position={[0.4, 3.2, 0.5]}
+                ></LightScene>
+                <LightScene
+                  intensity={0.2}
+                  position={[-0.5, 3.2, 0.5]}
+                ></LightScene>
+                <LightScene
+                  intensity={0.2}
+                  position={[0.4, 3.2, 1.5]}
+                ></LightScene>
+                <LightScene
+                  intensity={0.2}
+                  position={[-0.5, 3.2, 1.5]}
+                ></LightScene>
+                <LightScene
+                  intensity={0.2}
+                  position={[0.4, 3.2, 2.5]}
+                ></LightScene>
+                <LightScene
+                  intensity={0.2}
+                  position={[-0.5, 3.2, 2.5]}
+                ></LightScene>
+              </group> */}
               {/* <DirectionalLight></DirectionalLight> */}
               {/* <Model position={[-1, 0, 2]} roughness={0} metalness={10} /> */}
               {/* <Scene></Scene> */}
+              <SpotLightScene></SpotLightScene>
 
               <Model></Model>
-
+              <Demo></Demo>
               {/* <mesh position={[0, 0, 0]}>
                 <boxGeometry args={[2, 2]}></boxGeometry>
                 <meshStandardMaterial

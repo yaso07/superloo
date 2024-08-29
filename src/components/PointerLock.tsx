@@ -29,6 +29,7 @@ const PointerControls = () => {
     <PointerLockControls
       ref={pointerLockControlsRef}
       args={[camera, gl.domElement]}
+      onPointerDown={()=>{camera.position[-0.1,1,2]}}
     />
   );
 };
