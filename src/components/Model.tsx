@@ -42,7 +42,7 @@ export default function Model() {
   wallTiles.minFilter = THREE.LinearFilter;
   const vanityTiles = useTexture(vanityFilteredData[0].image);
 
-  vanityTiles.repeat.set(1, 1);
+  vanityTiles.repeat.set(2, 2);
   vanityTiles.wrapS = THREE.RepeatWrapping;
   vanityTiles.wrapT = THREE.RepeatWrapping;
 
@@ -70,7 +70,11 @@ export default function Model() {
   );
   //    obj.children[55].material.map=tiles
   //    obj.children[55].material;
-
+  // [45].forEach((item) => {
+  //   obj.children[item].material.map = tiles;
+  //   obj.children[item].material.reflectivity = 1;
+  //   obj.children[item].material.shininess = 1;
+  // });
   obj.children[54] = new THREE.Mesh();
   obj.children[54].name = "wall";
   console.log(obj.children[54]);
@@ -107,7 +111,7 @@ export default function Model() {
   panels.forEach((elem) => {
     obj.children[elem].material.map = panel;
     obj.children[elem].material.reflectivity = 0;
-    obj.children[elem].material.shininess = 7;
+    obj.children[elem].material.shininess = 10;
   });
   mesh.forEach((elem) => {
     obj.children[elem].material.map = tiles;
@@ -181,7 +185,6 @@ export default function Model() {
     <>
       <group castShadow receiveShadow position={[-1, 0, 2]} scale={0.0017}>
         <primitive ref={objRef} object={obj} />
-
         {mesh.map((item: any) => {
           return (
             <mesh geometry={obj.children[item].geometry}>
@@ -192,6 +195,13 @@ export default function Model() {
         <mesh geometry={obj.children[38].geometry}>
           <meshPhongMaterial map={tiles}></meshPhongMaterial>
         </mesh>
+        <mesh geometry={obj.children[34].geometry}>
+          <meshStandardMaterial
+            roughness={1}
+            metalness={0.5}
+            map={vanityTiles}
+          ></meshStandardMaterial>
+        </mesh>
         <mesh ref={glowingSphere} geometry={obj.children[4].geometry}>
           <meshStandardMaterial emissive="white" emissiveIntensity={2} />
         </mesh>
@@ -199,8 +209,17 @@ export default function Model() {
           <meshStandardMaterial emissive="white" emissiveIntensity={4} />
         </mesh>
         <mesh receiveShadow geometry={obj.children[13].geometry}>
-          <meshPhongMaterial map={floorTiles}></meshPhongMaterial>
+          <meshStandardMaterial map={floorTiles}></meshStandardMaterial>
         </mesh>
+
+        {/* <mesh geometry={obj.children[41].geometry}>
+          <meshPhongMaterial
+            map={steel}
+            reflectivity={1}
+            shininess={100}
+          ></meshPhongMaterial>
+        </mesh> */}
+
         <mesh receiveShadow geometry={obj.children[7].geometry}>
           <meshPhongMaterial></meshPhongMaterial>
         </mesh>

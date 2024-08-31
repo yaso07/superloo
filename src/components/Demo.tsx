@@ -15,7 +15,7 @@ const Demo = () => {
     return item.id === wall;
   });
   const wallTiles = useTexture(wallFilteredData[0].image);
-  wallTiles.repeat.set(15, 18);
+  wallTiles.repeat.set(13, 15);
   wallTiles.wrapS = THREE.RepeatWrapping;
   wallTiles.wrapT = THREE.RepeatWrapping;
   wallTiles.rotation = Math.PI / 2;
@@ -55,7 +55,14 @@ const Demo = () => {
         ref={objRef}
         geometry={obj.children[0].geometry}
         material={obj.children[0].material}
-      ></mesh>
+      >
+        <meshStandardMaterial
+          map={wallTiles}
+          roughness={1}
+          metalness={0.8}
+          color={"white"}
+        ></meshStandardMaterial>
+      </mesh>
     </group>
   );
 };

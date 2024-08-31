@@ -3,6 +3,7 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import "./App.css";
 import { Suspense, useEffect, useRef } from "react";
 import { HashLoader } from "react-spinners";
+import * as THREE from "three";
 import {
   PointLight,
   PointLightHelper,
@@ -26,7 +27,7 @@ import Demo from "./components/Demo";
 
 function SpotLightScene(props: any) {
   const spotLightRef = useRef<SpotLight>(null!);
-  // useHelper(spotLightRef, SpotLightHelper, "cyan");
+  useHelper(spotLightRef, SpotLightHelper, "cyan");
   // const { distance, shadowBias } = useControls({
   //   intensity: { value: 50, max: 300, min: 0 },
   //   angle: { value: Math.PI / 6, min: 0, max: 20 },
@@ -38,13 +39,16 @@ function SpotLightScene(props: any) {
     <>
       <spotLight
         castShadow
-        intensity={4}
+        intensity={8}
         ref={spotLightRef}
         angle={1.9}
         position={[0, 4.28, 1]}
         distance={5}
+        rotation={[0, 2, 3]}
         shadow-bias={-0.001}
         shadow-mapSize={2048}
+        power={10}
+        {...props}
       >
         {/* <orthographicCamera
           attach="shadow-camera"
@@ -56,7 +60,7 @@ function SpotLightScene(props: any) {
 }
 function LightScene(props: any) {
   const pointLightRef = useRef<PointLight>(null!);
-  // useHelper(pointLightRef, PointLightHelper, 1, "red");
+  useHelper(pointLightRef, PointLightHelper, 1, "red");
   // const { distance, shadowBias } = useControls({
   //   intensity: { value: 50, max: 300, min: 0 },
   //   angle: { value: Math.PI / 6, min: 0, max: 20 },
@@ -126,7 +130,8 @@ function App() {
   //   focus: { value: 0, min: 0, max: 2 },
   //   samples: { value: 10, min: 1, max: 20, step: 1 },
   // });
-
+  const renderer = useRef(!null);
+  // renderer.current.outputEncoding=THRE
   return (
     <>
       <div style={{ display: "flex" }}>
@@ -145,9 +150,10 @@ function App() {
           }
         >
           <Canvas
+            ref={renderer}
             id="canvas"
             shadows
-            camera={{ position: [1.6, 0, 3.5], near: 0.001, far: 100 }}
+            camera={{ position: [1.6, 0, 3.5], near: 0.1, far: 100, fov: 80 }}
             style={{ height: "100vh", width: "100%", backgroundColor: "white" }}
           >
             {/* <ambientLight intensity={10} /> */}
@@ -227,6 +233,24 @@ function App() {
                   intensity={0.9}
                   position={[-0.4, 0.8, 2.5]}
                 ></LightScene>
+                <SpotLightScene
+                  castShadow={false}
+                  position={[0.7, 3.5, 2.9]}
+                  angle={1.6}
+                  intensity={5}
+                ></SpotLightScene>
+                <SpotLightScene
+                  castShadow={false}
+                  position={[0.8, 4.5, -1.7]}
+                  angle={0.7}
+                  intensity={20}
+                ></SpotLightScene>
+                {/* <SpotLightScene
+                  castShadow={false}
+                  position={[-0.5, 2, 3]}
+                  angle={1.3}
+                  intensity={10}
+                ></SpotLightScene> */}
               </group>
               {/* <group>
                 <LightScene
@@ -314,7 +338,11 @@ function App() {
               {/* <CameraRig></CameraRig> */}
             </group>
             {/* <PointerControls /> */}
-            <OrbitControls></OrbitControls>
+            <OrbitControls
+              enableDamping
+              enablePan
+              zoomSpeed={0.5}
+            ></OrbitControls>
             {/* {/* <axesHelper args={[10]} /> */}
             {/* <gridHelper></gridHelper>  */}
           </Canvas>
