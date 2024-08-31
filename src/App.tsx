@@ -27,7 +27,7 @@ import Demo from "./components/Demo";
 
 function SpotLightScene(props: any) {
   const spotLightRef = useRef<SpotLight>(null!);
-  useHelper(spotLightRef, SpotLightHelper, "cyan");
+  // useHelper(spotLightRef, SpotLightHelper, "cyan");
   // const { distance, shadowBias } = useControls({
   //   intensity: { value: 50, max: 300, min: 0 },
   //   angle: { value: Math.PI / 6, min: 0, max: 20 },
@@ -60,7 +60,7 @@ function SpotLightScene(props: any) {
 }
 function LightScene(props: any) {
   const pointLightRef = useRef<PointLight>(null!);
-  useHelper(pointLightRef, PointLightHelper, 1, "red");
+  // useHelper(pointLightRef, PointLightHelper, 1, "red");
   // const { distance, shadowBias } = useControls({
   //   intensity: { value: 50, max: 300, min: 0 },
   //   angle: { value: Math.PI / 6, min: 0, max: 20 },
@@ -243,7 +243,7 @@ function App() {
                   castShadow={false}
                   position={[0.8, 4.5, -1.7]}
                   angle={0.7}
-                  intensity={20}
+                  intensity={25}
                 ></SpotLightScene>
                 {/* <SpotLightScene
                   castShadow={false}
