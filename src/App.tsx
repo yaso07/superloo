@@ -243,7 +243,7 @@ function App() {
                   castShadow={false}
                   position={[0.8, 4.5, -1.7]}
                   angle={0.7}
-                  intensity={25}
+                  intensity={20}
                 ></SpotLightScene>
                 {/* <SpotLightScene
                   castShadow={false}

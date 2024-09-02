@@ -58,7 +58,6 @@ export default function Model() {
   );
   const tiles = useTexture(`/MODEL DEMO/demo/_1.jpg`);
   const steel = useTexture(`/MODEL DEMO/demo/Brass_01__Stainless.png`);
-
   const obj = useLoader(
     OBJLoader,
     `/MODEL DEMO/14.08.2024_Blank Superloo_Material Update_R0.obj`,
@@ -103,8 +102,12 @@ export default function Model() {
     // obj.children[13].material[1].map.color = "white";
     console.log(obj.children[34]);
   }
-  obj.children[17].material.reflectivity = 2;
+  obj.children[17].material.reflectivity = 1;
   obj.children[17].material.shininess = 100;
+  obj.children[41].material.reflectivity = 1;
+  obj.children[41].material.shininess = 500;
+
+  console.log(obj.children[41]);
   const mesh: any = [55, 36, 38];
   const panels = [32, 33, 50, 51, 52, 35, 53];
 
@@ -195,7 +198,7 @@ export default function Model() {
         <mesh geometry={obj.children[38].geometry}>
           <meshPhongMaterial map={tiles}></meshPhongMaterial>
         </mesh>
-        <mesh geometry={obj.children[34].geometry}>
+        <mesh receiveShadow geometry={obj.children[34].geometry}>
           <meshStandardMaterial
             roughness={1}
             metalness={0.5}
@@ -211,13 +214,29 @@ export default function Model() {
         <mesh receiveShadow geometry={obj.children[13].geometry}>
           <meshStandardMaterial map={floorTiles}></meshStandardMaterial>
         </mesh>
+        <mesh receiveShadow castShadow geometry={obj.children[56].geometry}>
+          <meshStandardMaterial
+            roughness={0}
+            metalness={0.8}
+            emissive={"white"}
+            emissiveIntensity={0.7}
+          ></meshStandardMaterial>
+        </mesh>
+        <mesh receiveShadow castShadow geometry={obj.children[57].geometry}>
+          <meshStandardMaterial
+            roughness={0}
+            metalness={0.5}
+            emissive={"white"}
+            emissiveIntensity={0.4}
+          ></meshStandardMaterial>
+        </mesh>
 
         {/* <mesh geometry={obj.children[41].geometry}>
-          <meshPhongMaterial
+          <meshStandardMaterial
             map={steel}
-            reflectivity={1}
-            shininess={100}
-          ></meshPhongMaterial>
+            metalness={0.8}
+            roughness={0}
+          ></meshStandardMaterial>
         </mesh> */}
 
         <mesh receiveShadow geometry={obj.children[7].geometry}>

@@ -61,6 +61,7 @@ const Demo = () => {
           roughness={1}
           metalness={0.8}
           color={"white"}
+          side={THREE.FrontSide}
         ></meshStandardMaterial>
       </mesh>
     </group>
