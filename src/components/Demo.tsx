@@ -58,8 +58,8 @@ const Demo = () => {
       >
         <meshStandardMaterial
           map={wallTiles}
-          roughness={1}
-          metalness={0.8}
+          // roughness={1}
+          // metalness={0.8}
           color={"white"}
           side={THREE.FrontSide}
         ></meshStandardMaterial>

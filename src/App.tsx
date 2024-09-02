@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import "./App.css";
 import { Suspense, useEffect, useRef } from "react";
@@ -12,6 +11,7 @@ import {
 } from "three";
 import {
   Box,
+  ContactShadows,
   Environment,
   OrbitControls,
   PointerLockControls,
@@ -39,7 +39,7 @@ function SpotLightScene(props: any) {
     <>
       <spotLight
         castShadow
-        intensity={8}
+        intensity={1}
         ref={spotLightRef}
         angle={1.9}
         position={[0, 4.28, 1]}
@@ -47,7 +47,7 @@ function SpotLightScene(props: any) {
         rotation={[0, 2, 3]}
         shadow-bias={-0.001}
         shadow-mapSize={2048}
-        power={10}
+        power={5}
         {...props}
       >
         {/* <orthographicCamera
@@ -154,9 +154,9 @@ function App() {
             id="canvas"
             shadows
             camera={{ position: [1.6, 0, 3.5], near: 0.1, far: 100, fov: 80 }}
-            style={{ height: "100vh", width: "100%", backgroundColor: "white" }}
+            style={{ height: "100vh", width: "100%", backgroundColor: "black" }}
           >
-            {/* <ambientLight intensity={10} /> */}
+            <ambientLight intensity={1.5} />
             {/* <spotLight
           position={[1, 4.9, -4]}
           
@@ -170,11 +170,12 @@ function App() {
               <fog attach="fog" args={["black", 0, 40]} />
               {/* {enabled && <SoftShadows {...config} />} */}
               <LightScene castShadow></LightScene>
-              <LightScene
+              {/* <LightScene
                 castShadow={false}
                 position={[0.2, 2.5, 0.5]}
                 intensity={1.5}
-              ></LightScene>
+              ></LightScene> */}
+
               <Shadow
                 color="white"
                 colorStop={0}
@@ -186,17 +187,21 @@ function App() {
                 intensity={1}
                 position={[0.137, 3, -0.1]}
               ></LightScene> */}
-              <LightScene intensity={3} position={[0, 2, 3.5]}></LightScene>
+              <LightScene
+                castShadow={false}
+                intensity={3}
+                position={[0, 2, 3.5]}
+              ></LightScene>
               {/* <LightScene intensity={1} position={[0.5, 0.9, 1]}></LightScene> */}
               <group>
                 {/* <LightScene
                   intensity={0.4}
                   position={[0.3, 1.4, -0.5]}
                 ></LightScene> */}
-                <LightScene
+                {/* <LightScene
                   intensity={0.2}
                   position={[-0.2, 0.8, -0.5]}
-                ></LightScene>
+                ></LightScene> */}
                 {/* <LightScene
                   intensity={0.3}
                   position={[-0.01, 0.6, -0.5]}
@@ -205,14 +210,14 @@ function App() {
                   intensity={0.3}
                   position={[0.6, 0.6, -0.5]}
                 ></LightScene> */}
-                <LightScene
-                  intensity={0.2}
+                {/* <LightScene
+                  intensity={0.1}
                   position={[0.8, 0.8, -0.5]}
                 ></LightScene>
                 <LightScene
-                  intensity={0.5}
+                  intensity={0.4}
                   position={[0.3, 0.6, 0.3]}
-                ></LightScene>
+                ></LightScene> */}
                 <LightScene
                   intensity={0.6}
                   position={[0.2, 0.8, 0.5]}
@@ -222,15 +227,15 @@ function App() {
                   position={[0.3, 0.8, 1.5]}
                 ></LightScene>
                 <LightScene
-                  intensity={0.9}
+                  intensity={0.2}
                   position={[0.2, 0.8, 1.5]}
                 ></LightScene>
                 <LightScene
-                  intensity={0.9}
+                  intensity={0.2}
                   position={[0.3, 0.8, 2.5]}
                 ></LightScene>
                 <LightScene
-                  intensity={0.9}
+                  intensity={0.2}
                   position={[-0.4, 0.8, 2.5]}
                 ></LightScene>
                 <SpotLightScene
@@ -243,7 +248,7 @@ function App() {
                   castShadow={false}
                   position={[0.8, 4.5, -1.7]}
                   angle={0.7}
-                  intensity={20}
+                  intensity={10}
                 ></SpotLightScene>
                 {/* <SpotLightScene
                   castShadow={false}
@@ -340,8 +345,9 @@ function App() {
             {/* <PointerControls /> */}
             <OrbitControls
               enableDamping
-              enablePan
+              enablePan={false}
               zoomSpeed={0.5}
+              rotateSpeed={0.2}
             ></OrbitControls>
             {/* {/* <axesHelper args={[10]} /> */}
             {/* <gridHelper></gridHelper>  */}

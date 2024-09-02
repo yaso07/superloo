@@ -1,4 +1,3 @@
-// @ts-nocheck
 import {
   CubeCamera,
   MeshPortalMaterial,
@@ -15,6 +14,12 @@ import { useMyContext } from "../Context";
 import { floors, vanityImages, walls } from "../components/data";
 import { Reflector } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
+import {
+  Bloom,
+  DepthOfField,
+  EffectComposer,
+  Vignette,
+} from "@react-three/postprocessing";
 export default function Model() {
   const { floor, vanity } = useMyContext();
   const floorFilteredData = floors.filter((item) => {
@@ -187,6 +192,11 @@ export default function Model() {
   return (
     <>
       <group castShadow receiveShadow position={[-1, 0, 2]} scale={0.0017}>
+        <EffectComposer>
+          <DepthOfField focusDistance={1} focalLength={1} bokehScale={0} />
+          <Bloom intensity={0} luminanceThreshold={4} />
+          <Vignette eskil={false} offset={0} darkness={0} />
+        </EffectComposer>
         <primitive ref={objRef} object={obj} />
         {mesh.map((item: any) => {
           return (
@@ -201,7 +211,6 @@ export default function Model() {
         <mesh receiveShadow geometry={obj.children[34].geometry}>
           <meshStandardMaterial
             roughness={1}
-            metalness={0.5}
             map={vanityTiles}
           ></meshStandardMaterial>
         </mesh>
@@ -211,9 +220,7 @@ export default function Model() {
         <mesh ref={glowingSphere} geometry={obj.children[2].geometry}>
           <meshStandardMaterial emissive="white" emissiveIntensity={4} />
         </mesh>
-        <mesh receiveShadow geometry={obj.children[13].geometry}>
-          <meshStandardMaterial map={floorTiles}></meshStandardMaterial>
-        </mesh>
+
         <mesh receiveShadow castShadow geometry={obj.children[56].geometry}>
           <meshStandardMaterial
             roughness={0}
@@ -225,9 +232,9 @@ export default function Model() {
         <mesh receiveShadow castShadow geometry={obj.children[57].geometry}>
           <meshStandardMaterial
             roughness={0}
-            metalness={0.5}
+            metalness={0.8}
             emissive={"white"}
-            emissiveIntensity={0.4}
+            emissiveIntensity={0.6}
           ></meshStandardMaterial>
         </mesh>
 
@@ -240,7 +247,12 @@ export default function Model() {
         </mesh> */}
 
         <mesh receiveShadow geometry={obj.children[7].geometry}>
-          <meshPhongMaterial></meshPhongMaterial>
+          <meshStandardMaterial
+            roughness={1}
+            metalness={0.5}
+            emissive={"white"}
+            emissiveIntensity={0.15}
+          ></meshStandardMaterial>
         </mesh>
         <mesh geometry={obj.children[39].geometry}>
           <meshPhongMaterial map={tiles}></meshPhongMaterial>
