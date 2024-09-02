@@ -182,7 +182,7 @@ export default function Model() {
 
   useEffect(() => {
     // Assign layer 1 to the glowingSphere
-    glowingSphere.current.layers.set(1);
+    glowingSphere.current.layers.set(0);
     // Assign layer 0 (default) to the regularBox
 
     // Ensure the camera renders both layers
@@ -194,7 +194,7 @@ export default function Model() {
       <group castShadow receiveShadow position={[-1, 0, 2]} scale={0.0017}>
         <EffectComposer>
           <DepthOfField focusDistance={1} focalLength={1} bokehScale={0} />
-          <Bloom intensity={0} luminanceThreshold={4} />
+          <Bloom intensity={0} luminanceThreshold={0.9} />
           <Vignette eskil={false} offset={0} darkness={0} />
         </EffectComposer>
         <primitive ref={objRef} object={obj} />
@@ -220,6 +220,9 @@ export default function Model() {
         <mesh ref={glowingSphere} geometry={obj.children[2].geometry}>
           <meshStandardMaterial emissive="white" emissiveIntensity={4} />
         </mesh>
+        <mesh receiveShadow geometry={obj.children[13].geometry}>
+          <meshPhongMaterial map={floorTiles}></meshPhongMaterial>
+        </mesh>
 
         <mesh receiveShadow castShadow geometry={obj.children[56].geometry}>
           <meshStandardMaterial
@@ -231,8 +234,8 @@ export default function Model() {
         </mesh>
         <mesh receiveShadow castShadow geometry={obj.children[57].geometry}>
           <meshStandardMaterial
-            roughness={0}
-            metalness={0.8}
+            roughness={0.8}
+            metalness={1}
             emissive={"white"}
             emissiveIntensity={0.6}
           ></meshStandardMaterial>
