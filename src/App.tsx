@@ -28,7 +28,7 @@ import Demo from "./components/Demo";
 
 function SpotLightScene(props: any) {
   const spotLightRef = useRef<SpotLight>(null!);
-  // useHelper(spotLightRef, SpotLightHelper, "cyan");
+  s;
   // const { distance, shadowBias } = useControls({
   //   intensity: { value: 50, max: 300, min: 0 },
   //   angle: { value: Math.PI / 6, min: 0, max: 20 },
@@ -171,11 +171,11 @@ function App() {
               <fog attach="fog" args={["black", 0, 40]} />
               {/* {enabled && <SoftShadows {...config} />} */}
               <LightScene
-                position={[0.2, 3.5, -0.4]}
+                position={[0.2, 3.5, -0.5]}
                 power={10}
                 castShadow
               ></LightScene>
-              <LightScene position={[0.2, 2.5, -0.35]} castShadow></LightScene>
+              <LightScene position={[0.2, 2.5, -0.5]} castShadow></LightScene>
               {/* <LightScene
                 castShadow={false}
                 position={[0.2, 2.5, 0.5]}
@@ -258,10 +258,10 @@ function App() {
                 ></SpotLightScene>
                 {/* <SpotLightScene
                   castShadow={false}
-                  position={[-0.1, 4.5, 0]}
-                  angle={1.6}
-                  distance={1.2}
-                  intensity={10}
+                  position={[-1, 4, 17]}
+                  angle={0.2}
+                  distance={100}
+                  intensity={400}
                 ></SpotLightScene> */}
                 {/* <SpotLightScene
                   castShadow={false}

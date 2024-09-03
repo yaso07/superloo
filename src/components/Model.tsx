@@ -63,7 +63,7 @@ export default function Model() {
     `/MODEL DEMO/14.08.2024_Blank Superloo_Material Update_R0.mtl`
   );
   const tiles = useTexture(`/MODEL DEMO/demo/_1.jpg`);
-  const steel = useTexture(`/MODEL DEMO/demo/Brass_01__Stainless.png`);
+  const steel = useTexture(`/MODEL DEMO/demo/_.jpg`);
   const obj = useLoader(
     OBJLoader,
     `/MODEL DEMO/14.08.2024_Blank Superloo_Material Update_R0.obj`,
@@ -214,9 +214,11 @@ export default function Model() {
           return (
             <mesh geometry={obj.children[item].geometry}>
               <meshStandardMaterial
-                roughness={0.8}
-                metalness={0.2}
-                map={panel}
+                roughness={0.7}
+                metalness={0}
+                // reflectivity={1}
+                // shininess={500}
+                map={steel}
               ></meshStandardMaterial>
             </mesh>
           );
