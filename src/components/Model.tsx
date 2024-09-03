@@ -193,9 +193,9 @@ export default function Model() {
     <>
       <group castShadow receiveShadow position={[-1, 0, 2]} scale={0.0017}>
         <EffectComposer>
-          <DepthOfField focusDistance={1} focalLength={1} bokehScale={0} />
-          <Bloom intensity={0} luminanceThreshold={0.9} />
-          <Vignette eskil={false} offset={0} darkness={0} />
+          <DepthOfField focusDistance={2} focalLength={2} bokehScale={0} />
+          <Bloom intensity={0} luminanceThreshold={10} />
+          <Vignette eskil={false} offset={0} darkness={-0.5} />
         </EffectComposer>
         <primitive ref={objRef} object={obj} />
         {mesh.map((item: any) => {
@@ -214,7 +214,7 @@ export default function Model() {
             <mesh geometry={obj.children[item].geometry}>
               <meshStandardMaterial
                 roughness={0.8}
-                metalness={0.7}
+                metalness={0.2}
                 map={panel}
               ></meshStandardMaterial>
             </mesh>
