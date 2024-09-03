@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import "./App.css";
 import { Suspense, useEffect, useRef } from "react";
@@ -39,15 +40,15 @@ function SpotLightScene(props: any) {
     <>
       <spotLight
         castShadow
-        intensity={1}
+        intensity={20}
         ref={spotLightRef}
         angle={1.9}
         position={[0, 4.28, 1]}
-        distance={5}
+        distance={10}
         rotation={[0, 2, 3]}
         shadow-bias={-0.001}
         shadow-mapSize={2048}
-        power={5}
+        power={6}
         {...props}
       >
         {/* <orthographicCamera
@@ -156,7 +157,7 @@ function App() {
             camera={{ position: [1.6, 0, 3.5], near: 0.1, far: 100, fov: 80 }}
             style={{ height: "100vh", width: "100%", backgroundColor: "black" }}
           >
-            <ambientLight intensity={1.5} />
+            <ambientLight intensity={1.7} />
             {/* <spotLight
           position={[1, 4.9, -4]}
           
@@ -169,7 +170,12 @@ function App() {
             <group castShadow receiveShadow position={[0.5, -1.8, 0]}>
               <fog attach="fog" args={["black", 0, 40]} />
               {/* {enabled && <SoftShadows {...config} />} */}
-              <LightScene castShadow></LightScene>
+              <LightScene
+                position={[0.2, 3.5, -0.4]}
+                power={10}
+                castShadow
+              ></LightScene>
+              <LightScene position={[0.2, 2.5, -0.35]} castShadow></LightScene>
               {/* <LightScene
                 castShadow={false}
                 position={[0.2, 2.5, 0.5]}
@@ -250,6 +256,13 @@ function App() {
                   angle={0.7}
                   intensity={10}
                 ></SpotLightScene>
+                {/* <SpotLightScene
+                  castShadow={false}
+                  position={[-0.1, 4.5, 0]}
+                  angle={1.6}
+                  distance={1.2}
+                  intensity={10}
+                ></SpotLightScene> */}
                 {/* <SpotLightScene
                   castShadow={false}
                   position={[-0.5, 2, 3]}

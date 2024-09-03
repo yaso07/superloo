@@ -113,14 +113,14 @@ export default function Model() {
   obj.children[41].material.shininess = 500;
 
   console.log(obj.children[41]);
-  const mesh: any = [55, 36, 38];
+  const mesh: any = [55, 36, 38, 39];
   const panels = [32, 33, 50, 51, 52, 35, 53];
 
-  panels.forEach((elem) => {
-    obj.children[elem].material.map = panel;
-    obj.children[elem].material.reflectivity = 0;
-    obj.children[elem].material.shininess = 10;
-  });
+  // panels.forEach((elem) => {
+  //   obj.children[elem].material.map = panel;
+  //   obj.children[elem].material.reflectivity = 1;
+  //   obj.children[elem].material.shininess = 40;
+  // });
   mesh.forEach((elem) => {
     obj.children[elem].material.map = tiles;
     // obj.children[elem].material.map.color = "white";
@@ -201,7 +201,22 @@ export default function Model() {
         {mesh.map((item: any) => {
           return (
             <mesh geometry={obj.children[item].geometry}>
-              <meshPhongMaterial map={tiles}></meshPhongMaterial>
+              <meshStandardMaterial
+                roughness={0.8}
+                metalness={0.7}
+                map={tiles}
+              ></meshStandardMaterial>
+            </mesh>
+          );
+        })}
+        {panels.map((item: any) => {
+          return (
+            <mesh geometry={obj.children[item].geometry}>
+              <meshStandardMaterial
+                roughness={0.8}
+                metalness={0.7}
+                map={panel}
+              ></meshStandardMaterial>
             </mesh>
           );
         })}
@@ -221,7 +236,11 @@ export default function Model() {
           <meshStandardMaterial emissive="white" emissiveIntensity={4} />
         </mesh>
         <mesh receiveShadow geometry={obj.children[13].geometry}>
-          <meshPhongMaterial map={floorTiles}></meshPhongMaterial>
+          <meshStandardMaterial
+            map={floorTiles}
+            metalness={0.9}
+            roughness={0.3}
+          ></meshStandardMaterial>
         </mesh>
 
         <mesh receiveShadow castShadow geometry={obj.children[56].geometry}>
@@ -257,9 +276,19 @@ export default function Model() {
             emissiveIntensity={0.15}
           ></meshStandardMaterial>
         </mesh>
-        <mesh geometry={obj.children[39].geometry}>
-          <meshPhongMaterial map={tiles}></meshPhongMaterial>
+
+        <mesh receiveShadow geometry={obj.children[8].geometry}>
+          <meshStandardMaterial
+            roughness={1}
+            metalness={0.2}
+            color={"white"}
+            emissive={"white"}
+            emissiveIntensity={0.15}
+          ></meshStandardMaterial>
         </mesh>
+        {/* <mesh geometry={obj.children[39].geometry}>
+          <meshPhongMaterial map={tiles}></meshPhongMaterial>
+        </mesh> */}
         {/* <mesh geometry={obj.children[17].geometry}>
           <meshPhongMaterial map={steel}></meshPhongMaterial>
         </mesh> */}
