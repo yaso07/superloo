@@ -28,7 +28,7 @@ import Demo from "./components/Demo";
 
 function SpotLightScene(props: any) {
   const spotLightRef = useRef<SpotLight>(null!);
-  s;
+  // useHelper(spotLightRef, SpotLightHelper, "cyan");
   // const { distance, shadowBias } = useControls({
   //   intensity: { value: 50, max: 300, min: 0 },
   //   angle: { value: Math.PI / 6, min: 0, max: 20 },
