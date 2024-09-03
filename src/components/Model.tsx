@@ -63,7 +63,8 @@ export default function Model() {
     `/MODEL DEMO/14.08.2024_Blank Superloo_Material Update_R0.mtl`
   );
   const tiles = useTexture(`/MODEL DEMO/demo/_1.jpg`);
-  const steel = useTexture(`/MODEL DEMO/demo/_.jpg`);
+  const steel = useTexture(`MODEL DEMO/demo/Brass_01__Stainless.png`);
+  const steelMaterial = useTexture(`MODEL DEMO/demo/_.jpg`);
   const obj = useLoader(
     OBJLoader,
     `/MODEL DEMO/14.08.2024_Blank Superloo_Material Update_R0.obj`,
@@ -113,7 +114,8 @@ export default function Model() {
   obj.children[41].material.reflectivity = 1;
   obj.children[41].material.shininess = 500;
 
-  console.log(obj.children[41]);
+  console.log(obj.children[17]);
+  console.log(steel);
   const mesh: any = [55, 36, 38, 39];
   const panels = [32, 33, 50, 51, 52, 35, 53];
 
@@ -199,6 +201,28 @@ export default function Model() {
           <Vignette eskil={false} offset={0} darkness={-0.5} />
         </EffectComposer>
         <primitive ref={objRef} object={obj} />
+
+        {[40, 41, 42, 45, 46, 48, 49, 9, 10, 12].map((item) => {
+          return (
+            <mesh geometry={obj.children[item].geometry}>
+              <meshStandardMaterial
+                map={steel}
+                color={"#E7C13F"}
+                metalness={0.9}
+                roughness={0}
+                refractionRatio={10}
+              ></meshStandardMaterial>
+            </mesh>
+          );
+        })}
+        <mesh geometry={obj.children[15].geometry}>
+          <meshStandardMaterial
+            map={steel}
+            color={"#E7C13F"}
+            roughness={0}
+            metalness={0.8}
+          ></meshStandardMaterial>
+        </mesh>
         {mesh.map((item: any) => {
           return (
             <mesh geometry={obj.children[item].geometry}>
@@ -214,11 +238,10 @@ export default function Model() {
           return (
             <mesh geometry={obj.children[item].geometry}>
               <meshStandardMaterial
-                roughness={0.7}
-                metalness={0}
                 // reflectivity={1}
-                // shininess={500}
-                map={steel}
+                roughness={0.4}
+                metalness={0.16}
+                color={"#E7BF74"}
               ></meshStandardMaterial>
             </mesh>
           );
@@ -245,7 +268,6 @@ export default function Model() {
             roughness={0.3}
           ></meshStandardMaterial>
         </mesh>
-
         <mesh receiveShadow castShadow geometry={obj.children[56].geometry}>
           <meshStandardMaterial
             roughness={0}
@@ -262,7 +284,6 @@ export default function Model() {
             emissiveIntensity={0.6}
           ></meshStandardMaterial>
         </mesh>
-
         {/* <mesh geometry={obj.children[41].geometry}>
           <meshStandardMaterial
             map={steel}
@@ -270,7 +291,6 @@ export default function Model() {
             roughness={0}
           ></meshStandardMaterial>
         </mesh> */}
-
         <mesh receiveShadow geometry={obj.children[7].geometry}>
           <meshStandardMaterial
             roughness={1}
@@ -279,7 +299,6 @@ export default function Model() {
             emissiveIntensity={0.15}
           ></meshStandardMaterial>
         </mesh>
-
         <mesh receiveShadow geometry={obj.children[8].geometry}>
           <meshStandardMaterial
             roughness={1}

@@ -170,12 +170,14 @@ function App() {
             <group castShadow receiveShadow position={[0.5, -1.8, 0]}>
               <fog attach="fog" args={["black", 0, 40]} />
               {/* {enabled && <SoftShadows {...config} />} */}
-              <LightScene
+              {/* <LightScene
                 position={[0.2, 3.5, -0.5]}
                 power={10}
                 castShadow
               ></LightScene>
-              <LightScene position={[0.2, 2.5, -0.5]} castShadow></LightScene>
+              <LightScene 
+              position={[0.2, 2.5, -0.5]}
+              castShadow></LightScene> */}
               {/* <LightScene
                 castShadow={false}
                 position={[0.2, 2.5, 0.5]}
