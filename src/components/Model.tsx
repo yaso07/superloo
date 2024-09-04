@@ -280,8 +280,10 @@ export default function Model() {
         <mesh receiveShadow geometry={obj.children[13].geometry}>
           <meshStandardMaterial
             map={floorTiles}
-            metalness={0.6}
-            roughness={0.3}
+            metalness={0}
+            roughness={1}
+            emissive={"white"}
+            emissiveIntensity={0.15}
           ></meshStandardMaterial>
         </mesh>
         <mesh receiveShadow castShadow geometry={obj.children[56].geometry}>
