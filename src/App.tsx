@@ -355,15 +355,15 @@ function App() {
                   metalness={1}
                 ></meshStandardMaterial>
               </mesh> */}
-              {/* <CameraRig></CameraRig> */}
+              <CameraRig></CameraRig>
             </group>
-            {/* <PointerControls /> */}
-            <OrbitControls
+            <PointerControls />
+            {/* <OrbitControls
               enableDamping
               enablePan={false}
               zoomSpeed={0.5}
               rotateSpeed={0.2}
-            ></OrbitControls>
+            ></OrbitControls> */}
             {/* {/* <axesHelper args={[10]} /> */}
             {/* <gridHelper></gridHelper>  */}
           </Canvas>
@@ -378,6 +378,8 @@ function App() {
 const CameraRig = () => {
   const { camera } = useThree();
   camera.position.set(0.7, 1.1, 1.8); // Set camera height to eye level (1.6 meters above the ground)
+  camera.near = 0.01;
+  camera.far = 100;
 
   useFrame(() => {
     camera.add;

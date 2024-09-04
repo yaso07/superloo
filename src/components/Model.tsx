@@ -1,27 +1,23 @@
-// @ts-nocheck
+//@ts-nocheck
 import {
-  CubeCamera,
-  MeshPortalMaterial,
   MeshReflectorMaterial,
-  RoundedBox,
   useHelper,
   useTexture,
 } from "@react-three/drei";
 import { useLoader, useThree } from "@react-three/fiber";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { MTLLoader, OBJLoader } from "three/examples/jsm/Addons.js";
 import * as THREE from "three";
 import { useMyContext } from "../Context";
 import { floors, vanityImages, walls } from "../components/data";
-import { Reflector } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import {
   Bloom,
   DepthOfField,
   EffectComposer,
-  ToneMapping,
   Vignette,
 } from "@react-three/postprocessing";
+
 export default function Model() {
   const { floor, vanity } = useMyContext();
   const floorFilteredData = floors.filter((item) => {
@@ -206,8 +202,8 @@ export default function Model() {
           />
           <Vignette eskil={false} offset={0} darkness={-0.5} />
         </EffectComposer>
-        <primitive ref={objRef} object={obj} />
 
+        <primitive ref={objRef} object={obj} />
         {[40, 41, 42, 45, 46, 48, 49, 9, 10, 12].map((item) => {
           return (
             <mesh geometry={obj.children[item].geometry}>
@@ -234,7 +230,13 @@ export default function Model() {
         {mesh.map((item: any) => {
           return (
             <mesh geometry={obj.children[item].geometry}>
-              <meshStandardMaterial map={tiles}></meshStandardMaterial>
+              <meshStandardMaterial
+                map={tiles}
+                roughness={0.4}
+                metalness={1}
+                emissive={"#1A232B"}
+                emissiveIntensity={5.5}
+              ></meshStandardMaterial>
             </mesh>
           );
         })}
