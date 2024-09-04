@@ -1,4 +1,3 @@
-// @ts-nocheck
 import {
   CubeCamera,
   MeshPortalMaterial,
@@ -19,6 +18,7 @@ import {
   Bloom,
   DepthOfField,
   EffectComposer,
+  ToneMapping,
   Vignette,
 } from "@react-three/postprocessing";
 export default function Model() {
@@ -196,8 +196,13 @@ export default function Model() {
     <>
       <group castShadow receiveShadow position={[-1, 0, 2]} scale={0.0017}>
         <EffectComposer>
-          <DepthOfField focusDistance={2} focalLength={2} bokehScale={0} />
-          <Bloom intensity={0} luminanceThreshold={10} />
+          <DepthOfField focusDistance={1} focalLength={40} bokehScale={0} />
+          <Bloom
+            outputColorSpace={"srgb"}
+            intensity={0}
+            luminanceThreshold={10}
+            radius={0.9}
+          />
           <Vignette eskil={false} offset={0} darkness={-0.5} />
         </EffectComposer>
         <primitive ref={objRef} object={obj} />
@@ -208,7 +213,7 @@ export default function Model() {
               <meshStandardMaterial
                 map={steel}
                 color={"#E7C13F"}
-                metalness={0.9}
+                metalness={0.8}
                 roughness={0}
                 refractionRatio={10}
               ></meshStandardMaterial>
@@ -226,11 +231,7 @@ export default function Model() {
         {mesh.map((item: any) => {
           return (
             <mesh geometry={obj.children[item].geometry}>
-              <meshStandardMaterial
-                roughness={0.8}
-                metalness={0.7}
-                map={tiles}
-              ></meshStandardMaterial>
+              <meshStandardMaterial map={tiles}></meshStandardMaterial>
             </mesh>
           );
         })}
@@ -264,7 +265,7 @@ export default function Model() {
         <mesh receiveShadow geometry={obj.children[13].geometry}>
           <meshStandardMaterial
             map={floorTiles}
-            metalness={0.9}
+            metalness={0.6}
             roughness={0.3}
           ></meshStandardMaterial>
         </mesh>

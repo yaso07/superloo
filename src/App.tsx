@@ -157,7 +157,7 @@ function App() {
             camera={{ position: [1.6, 0, 3.5], near: 0.1, far: 100, fov: 80 }}
             style={{ height: "100vh", width: "100%", backgroundColor: "black" }}
           >
-            <ambientLight intensity={1.7} />
+            <ambientLight intensity={2} />
             {/* <spotLight
           position={[1, 4.9, -4]}
           
