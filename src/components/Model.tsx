@@ -247,8 +247,8 @@ export default function Model() {
                 roughness={0.4}
                 metalness={0.1}
                 emissiveMap={steel}
-                emissive={steel}
-                emissiveIntensity={0.3}
+                emissive={"#E7C770"}
+                emissiveIntensity={0.4}
               ></meshStandardMaterial>
             </mesh>
           );
