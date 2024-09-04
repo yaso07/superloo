@@ -281,7 +281,7 @@ export default function Model() {
           <meshStandardMaterial
             map={floorTiles}
             metalness={0}
-            roughness={1}
+            roughness={0.3}
             emissive={"white"}
             emissiveIntensity={0.15}
           ></meshStandardMaterial>
