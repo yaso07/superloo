@@ -111,7 +111,7 @@ export default function Model() {
     console.log(obj.children[34]);
   }
   obj.children[17].material.reflectivity = 1;
-  obj.children[17].material.shininess = 100;
+  obj.children[17].material.shininess = 50;
   obj.children[41].material.reflectivity = 1;
   obj.children[41].material.shininess = 500;
 
@@ -212,11 +212,12 @@ export default function Model() {
           return (
             <mesh geometry={obj.children[item].geometry}>
               <meshStandardMaterial
-                map={steel}
-                color={"#E7C13F"}
-                metalness={0.8}
+                color={"#E7BB0F"}
+                metalness={1}
                 roughness={0}
                 refractionRatio={10}
+                emissive={"#E7BB0F"}
+                emissiveIntensity={0.9}
               ></meshStandardMaterial>
             </mesh>
           );
@@ -224,9 +225,10 @@ export default function Model() {
         <mesh geometry={obj.children[15].geometry}>
           <meshStandardMaterial
             map={steel}
-            color={"#E7C13F"}
             roughness={0}
-            metalness={0.8}
+            metalness={1}
+            emissive={"#E7BB0F"}
+            emissiveIntensity={0.8}
           ></meshStandardMaterial>
         </mesh>
         {mesh.map((item: any) => {
@@ -241,15 +243,27 @@ export default function Model() {
             <mesh geometry={obj.children[item].geometry}>
               <meshStandardMaterial
                 // reflectivity={1}
+                map={steel}
                 roughness={0.4}
-                metalness={0.16}
-                color={"#E7BF74"}
+                metalness={0.1}
+                emissiveMap={steel}
+                emissive={steel}
+                emissiveIntensity={0.3}
               ></meshStandardMaterial>
             </mesh>
           );
         })}
         <mesh geometry={obj.children[38].geometry}>
           <meshPhongMaterial map={tiles}></meshPhongMaterial>
+        </mesh>
+        <mesh geometry={obj.children[17].geometry}>
+          <meshStandardMaterial
+            map={steel}
+            metalness={0.1}
+            roughness={0}
+            emissive={"#E7BB0F"}
+            emissiveIntensity={0.4}
+          ></meshStandardMaterial>
         </mesh>
         <mesh receiveShadow geometry={obj.children[34].geometry}>
           <meshStandardMaterial
@@ -332,6 +346,13 @@ export default function Model() {
           geometry={obj.children[16].geometry}
           material={obj.children[16].material}
         >
+          <meshStandardMaterial
+            map={steel}
+            roughness={0}
+            metalness={1}
+            emissive={"#E7BB0F"}
+            emissiveIntensity={0.8}
+          ></meshStandardMaterial>
           {/* <MeshReflectorMaterial
             // resolution={1024}
 
