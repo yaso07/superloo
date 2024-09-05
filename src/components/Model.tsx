@@ -189,6 +189,15 @@ export default function Model() {
     camera.layers.enable(1);
   }, [camera]);
 
+  const nonBloomLayer = 0;
+  const noBloomObject = useRef(!null);
+
+  // Assign bloom to everything except this object
+  useThree(({ gl, scene, camera }) => {
+    gl.outputEncoding = THREE.sRGBEncoding; // Ensure correct color space (sRGB)
+    camera.layers.enableAll(); // Enable all layers for the camera
+    noBloomObject.current?.layers?.set(nonBloomLayer); // Exclude this object from bloom
+  });
   return (
     <>
       <group castShadow receiveShadow position={[-1, 0, 2]} scale={0.0017}>
@@ -196,9 +205,9 @@ export default function Model() {
           <DepthOfField focusDistance={1} focalLength={40} bokehScale={0} />
           <Bloom
             outputColorSpace={"srgb"}
-            intensity={0}
-            luminanceThreshold={10}
-            radius={0.9}
+            intensity={0.1}
+            luminanceThreshold={0}
+            radius={0.1}
           />
           <Vignette eskil={false} offset={0} darkness={-0.5} />
         </EffectComposer>
@@ -208,12 +217,11 @@ export default function Model() {
           return (
             <mesh geometry={obj.children[item].geometry}>
               <meshStandardMaterial
-                color={"#E7BB0F"}
-                metalness={1}
+                metalness={0.7}
                 roughness={0}
-                refractionRatio={10}
+                map={steel}
                 emissive={"#E7BB0F"}
-                emissiveIntensity={0.9}
+                emissiveIntensity={0.2}
               ></meshStandardMaterial>
             </mesh>
           );
@@ -232,8 +240,8 @@ export default function Model() {
             <mesh geometry={obj.children[item].geometry}>
               <meshStandardMaterial
                 map={tiles}
-                roughness={0.4}
-                metalness={1}
+                roughness={0.8}
+                metalness={0}
                 emissive={"#1A232B"}
                 emissiveIntensity={5.5}
               ></meshStandardMaterial>
@@ -242,15 +250,15 @@ export default function Model() {
         })}
         {panels.map((item: any) => {
           return (
-            <mesh geometry={obj.children[item].geometry}>
+            <mesh ref={noBloomObject} geometry={obj.children[item].geometry}>
               <meshStandardMaterial
-                // reflectivity={1}
                 map={steel}
-                roughness={0.4}
-                metalness={0.1}
-                emissiveMap={steel}
-                emissive={"#E7C770"}
-                emissiveIntensity={0.4}
+                roughness={0.9}
+                metalness={0}
+                // emissiveMap={steel}
+                // emissive={"#E7C770"}
+                emissive={"#7F6745"}
+                // emissiveIntensity={0.2}
               ></meshStandardMaterial>
             </mesh>
           );

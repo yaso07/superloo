@@ -154,7 +154,12 @@ function App() {
             ref={renderer}
             id="canvas"
             shadows
-            camera={{ position: [1.6, 0, 3.5], near: 0.1, far: 100, fov: 80 }}
+            camera={{
+              position: [1.2, 1.1, 3],
+              near: 0.01,
+              far: 100,
+              fov: 80,
+            }}
             style={{ height: "100vh", width: "100%", backgroundColor: "black" }}
           >
             <ambientLight intensity={2} />
@@ -258,112 +263,24 @@ function App() {
                   angle={0.7}
                   intensity={10}
                 ></SpotLightScene>
-                {/* <SpotLightScene
-                  castShadow={false}
-                  position={[-1, 4, 17]}
-                  angle={0.2}
-                  distance={100}
-                  intensity={400}
-                ></SpotLightScene> */}
-                {/* <SpotLightScene
-                  castShadow={false}
-                  position={[-0.5, 2, 3]}
-                  angle={1.3}
-                  intensity={10}
-                ></SpotLightScene> */}
               </group>
-              {/* <group>
-                <LightScene
-                  intensity={0.2}
-                  position={[-0.5, 2.5, -0.5]}
-                ></LightScene>
-                <LightScene
-                  intensity={0.3}
-                  position={[0.4, 2.5, -0.5]}
-                ></LightScene>
-                <LightScene
-                  intensity={0.9}
-                  position={[0.4, 2.5, 0.5]}
-                ></LightScene>
-                <LightScene
-                  intensity={0.9}
-                  position={[-0.5, 2.5, 0.5]}
-                ></LightScene>
-                <LightScene
-                  intensity={0.9}
-                  position={[0.4, 2.5, 1.5]}
-                ></LightScene>
-                <LightScene
-                  intensity={0.4}
-                  position={[-0.5, 2.5, 1.5]}
-                ></LightScene>
-                <LightScene
-                  intensity={0.9}
-                  position={[0.4, 2.5, 2.5]}
-                ></LightScene>
-                <LightScene
-                  intensity={0.9}
-                  position={[-0.5, 2.5, 2.5]}
-                ></LightScene>
-              </group> */}
-              {/* <group>
-                <LightScene
-                 
-                  intensity={0.2}
-                  position={[-0.5, 3.2, -0.5]}
-                ></LightScene>
-                <LightScene
-                  intensity={0.2}
-                  position={[0.4, 3.2, -0.5]}
-                ></LightScene>
-                <LightScene
-                  intensity={0.2}
-                  position={[0.4, 3.2, 0.5]}
-                ></LightScene>
-                <LightScene
-                  intensity={0.2}
-                  position={[-0.5, 3.2, 0.5]}
-                ></LightScene>
-                <LightScene
-                  intensity={0.2}
-                  position={[0.4, 3.2, 1.5]}
-                ></LightScene>
-                <LightScene
-                  intensity={0.2}
-                  position={[-0.5, 3.2, 1.5]}
-                ></LightScene>
-                <LightScene
-                  intensity={0.2}
-                  position={[0.4, 3.2, 2.5]}
-                ></LightScene>
-                <LightScene
-                  intensity={0.2}
-                  position={[-0.5, 3.2, 2.5]}
-                ></LightScene>
-              </group> */}
-              {/* <DirectionalLight></DirectionalLight> */}
-              {/* <Model position={[-1, 0, 2]} roughness={0} metalness={10} /> */}
-              {/* <Scene></Scene> */}
+
               <SpotLightScene></SpotLightScene>
 
               <Model></Model>
               <Demo></Demo>
-              {/* <mesh position={[0, 0, 0]}>
-                <boxGeometry args={[2, 2]}></boxGeometry>
-                <meshStandardMaterial
-                  roughness={1}
-                  metalness={1}
-                ></meshStandardMaterial>
-              </mesh> */}
-              <CameraRig></CameraRig>
+
+              {/* <CameraRig></CameraRig> */}
             </group>
-            <PointerControls />
-            {/* <OrbitControls
+            {/* <PointerControls /> */}
+            <OrbitControls
               enableDamping
               enablePan={false}
               zoomSpeed={0.5}
-              rotateSpeed={0.2}
-            ></OrbitControls> */}
+              rotateSpeed={0.1}
+              minDistance={-1}
+              maxDistance={5}
+            ></OrbitControls>
             {/* {/* <axesHelper args={[10]} /> */}
             {/* <gridHelper></gridHelper>  */}
           </Canvas>
@@ -377,9 +294,9 @@ function App() {
 
 const CameraRig = () => {
   const { camera } = useThree();
-  camera.position.set(0.7, 1.1, 1.8); // Set camera height to eye level (1.6 meters above the ground)
+  camera.position.set(1.2, 1.1, 2.3); // Set camera height to eye level (1.6 meters above the ground)
   camera.near = 0.01;
-  camera.far = 100;
+  camera.far = 1;
 
   useFrame(() => {
     camera.add;
@@ -387,3 +304,37 @@ const CameraRig = () => {
   return null;
 };
 export default App;
+
+function ControlledCamera() {
+  const cameraRef = useRef();
+  const mouse = useRef({ x: 0, y: 0 });
+  const zoomLevel = useRef(5); // Initial zoom level (distance from the object)
+
+  // Event handler for mouse movement (rotate camera)
+  const handleMouseMove = (event) => {
+    mouse.current.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.current.y = -(event.clientY / window.innerHeight) * 2 + 1;
+  };
+
+  // Event handler for mouse wheel (zoom in/out)
+  const handleWheel = (event) => {
+    zoomLevel.current = Math.max(
+      2,
+      Math.min(10, zoomLevel.current + event.deltaY * 0.01)
+    );
+  };
+
+  // Use frame loop to update the camera's rotation and zoom level
+  useFrame(({ camera }) => {
+    if (cameraRef.current) {
+      // Rotate camera based on mouse position
+      camera.rotation.y = mouse.current.x * 0.5; // Adjust rotation sensitivity
+      camera.rotation.x = mouse.current.y * 0.5;
+
+      // Update the camera's zoom by adjusting the position (distance from the object)
+      camera.position.z = zoomLevel.current; // Zooming by changing the z-position
+    }
+  });
+
+  return <div onMouseMove={handleMouseMove} onWheel={handleWheel}></div>;
+}
