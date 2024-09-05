@@ -33,7 +33,7 @@ export default function Model() {
   const panel = useTexture(`/MODEL DEMO/demo/Brass_01__Stainless.png`);
   const floorTiles = useTexture(floorFilteredData[0].image);
 
-  floorTiles.repeat.set(1, 1);
+  floorTiles.repeat.set(2, 2);
   floorTiles.wrapS = THREE.RepeatWrapping;
   floorTiles.wrapT = THREE.RepeatWrapping;
   const wallTiles = useTexture(wallFilteredData[0].image);
@@ -203,13 +203,8 @@ export default function Model() {
       <group castShadow receiveShadow position={[-1, 0, 2]} scale={0.0017}>
         <EffectComposer>
           <DepthOfField focusDistance={1} focalLength={40} bokehScale={0} />
-          <Bloom
-            outputColorSpace={"srgb"}
-            intensity={0.1}
-            luminanceThreshold={0}
-            radius={0.1}
-          />
-          <Vignette eskil={false} offset={0} darkness={-0.5} />
+          <Bloom intensity={0} radius={0.1} />
+          <Vignette eskil={false} offset={0} darkness={0.3} />
         </EffectComposer>
 
         <primitive ref={objRef} object={obj} />
@@ -218,33 +213,31 @@ export default function Model() {
             <mesh geometry={obj.children[item].geometry}>
               <meshStandardMaterial
                 metalness={0.7}
-                roughness={0}
+                roughness={0.2}
                 map={steel}
-                emissive={"#E7BB0F"}
-                emissiveIntensity={0.2}
+                // emissive={"#E7BB0F"}
+                // emissiveIntensity={0.2}
               ></meshStandardMaterial>
             </mesh>
           );
         })}
         <mesh geometry={obj.children[15].geometry}>
           <meshStandardMaterial
-            map={steel}
-            roughness={0}
-            metalness={1}
-            emissive={"#E7BB0F"}
-            emissiveIntensity={0.8}
+            map={steelMaterial}
+            roughness={0.6}
+            metalness={0.2}
           ></meshStandardMaterial>
         </mesh>
         {mesh.map((item: any) => {
           return (
             <mesh geometry={obj.children[item].geometry}>
-              <meshStandardMaterial
+              <meshPhongMaterial
                 map={tiles}
-                roughness={0.8}
-                metalness={0}
-                emissive={"#1A232B"}
-                emissiveIntensity={5.5}
-              ></meshStandardMaterial>
+                // roughness={0.8}
+                // metalness={0}
+                // emissive={"#1A232B"}
+                // emissiveIntensity={5.5}
+              ></meshPhongMaterial>
             </mesh>
           );
         })}
@@ -266,15 +259,15 @@ export default function Model() {
         <mesh geometry={obj.children[38].geometry}>
           <meshPhongMaterial map={tiles}></meshPhongMaterial>
         </mesh>
-        <mesh geometry={obj.children[17].geometry}>
+        {/* <mesh geometry={obj.children[17].geometry}>
           <meshStandardMaterial
             map={steel}
             metalness={0.1}
             roughness={0}
             emissive={"#E7BB0F"}
-            emissiveIntensity={0.4}
+            emissiveIntensity={0.3}
           ></meshStandardMaterial>
-        </mesh>
+        </mesh> */}
         <mesh receiveShadow geometry={obj.children[34].geometry}>
           <meshStandardMaterial
             roughness={1}
@@ -287,15 +280,15 @@ export default function Model() {
         <mesh ref={glowingSphere} geometry={obj.children[2].geometry}>
           <meshStandardMaterial emissive="white" emissiveIntensity={4} />
         </mesh>
-        <mesh receiveShadow geometry={obj.children[13].geometry}>
+        {/* <mesh receiveShadow geometry={obj.children[13].geometry}>
           <meshStandardMaterial
             map={floorTiles}
-            metalness={0}
+            metalness={0.2}
             roughness={0.3}
             emissive={"white"}
             emissiveIntensity={0.15}
           ></meshStandardMaterial>
-        </mesh>
+        </mesh> */}
         <mesh receiveShadow castShadow geometry={obj.children[56].geometry}>
           <meshStandardMaterial
             roughness={0}
@@ -353,39 +346,6 @@ export default function Model() {
             </mesh>
           );
         })} */}
-        <mesh
-          position={[1.5, 4, 0]}
-          geometry={obj.children[16].geometry}
-          material={obj.children[16].material}
-        >
-          <meshStandardMaterial
-            map={steel}
-            roughness={0}
-            metalness={1}
-            emissive={"#E7BB0F"}
-            emissiveIntensity={0.8}
-          ></meshStandardMaterial>
-          {/* <MeshReflectorMaterial
-            // resolution={1024}
-
-            blur={[1000, 1000]}
-            mixBlur={1}
-            mirror={3}
-            // mixStrength={1}
-            // depthToBlurRatioBias={0.5}
-            // blur={[300, 100]}
-            resolution={2048}
-            // mixBlur={1}
-            mixStrength={1}
-            // roughness={1}
-            depthScale={2}
-            minDepthThreshold={0.4}
-            maxDepthThreshold={0.4}
-            // color="#050505"
-            // metalness={0.5}
-          ></MeshReflectorMaterial> */}
-          {/* <meshPhongMaterial reflectivity={1} shininess={100} ></meshPhongMaterial> */}
-        </mesh>
       </group>
 
       {/* <mesh position={[0, 2, 1]}>

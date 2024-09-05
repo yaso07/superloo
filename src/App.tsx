@@ -40,7 +40,7 @@ function SpotLightScene(props: any) {
     <>
       <spotLight
         castShadow
-        intensity={20}
+        intensity={10}
         ref={spotLightRef}
         angle={1.9}
         position={[0, 4.28, 1]}
@@ -162,7 +162,7 @@ function App() {
             }}
             style={{ height: "100vh", width: "100%", backgroundColor: "black" }}
           >
-            <ambientLight intensity={2} />
+            <ambientLight intensity={1.4} />
             {/* <spotLight
           position={[1, 4.9, -4]}
           
