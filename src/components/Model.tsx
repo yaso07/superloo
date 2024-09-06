@@ -33,7 +33,7 @@ export default function Model() {
   const panel = useTexture(`/MODEL DEMO/demo/Brass_01__Stainless.png`);
   const floorTiles = useTexture(floorFilteredData[0].image);
 
-  floorTiles.repeat.set(2, 2);
+  floorTiles.repeat.set(1, 1);
   floorTiles.wrapS = THREE.RepeatWrapping;
   floorTiles.wrapT = THREE.RepeatWrapping;
   const wallTiles = useTexture(wallFilteredData[0].image);
@@ -280,15 +280,15 @@ export default function Model() {
         <mesh ref={glowingSphere} geometry={obj.children[2].geometry}>
           <meshStandardMaterial emissive="white" emissiveIntensity={4} />
         </mesh>
-        {/* <mesh receiveShadow geometry={obj.children[13].geometry}>
+        <mesh receiveShadow geometry={obj.children[13].geometry}>
           <meshStandardMaterial
             map={floorTiles}
-            metalness={0.2}
-            roughness={0.3}
-            emissive={"white"}
-            emissiveIntensity={0.15}
+            // metalness={0.2}
+            // roughness={0.3}
+            // emissive={"white"}
+            // emissiveIntensity={0.15}
           ></meshStandardMaterial>
-        </mesh> */}
+        </mesh>
         <mesh receiveShadow castShadow geometry={obj.children[56].geometry}>
           <meshStandardMaterial
             roughness={0}
