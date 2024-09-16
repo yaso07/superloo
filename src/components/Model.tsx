@@ -6,7 +6,7 @@ import {
 } from "@react-three/drei";
 import { useLoader, useThree } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
-import { MTLLoader, OBJLoader } from "three/examples/jsm/Addons.js";
+import { GLTFLoader, MTLLoader, OBJLoader } from "three/examples/jsm/Addons.js";
 import * as THREE from "three";
 import { useMyContext } from "../Context";
 import { floors, vanityImages, walls } from "../components/data";
@@ -89,7 +89,7 @@ export default function Model() {
   });
 
   // if (obj.children[54]) {
-  //   obj.children[54].material[0].map = wallTiles;
+  //   obj.childresn[54].material[0].map = wallTiles;
   //   obj.children[54].material[1].map = wallTiles;
 
   //   console.log(obj.children[13]);
@@ -198,8 +198,49 @@ export default function Model() {
     camera.layers.enableAll(); // Enable all layers for the camera
     noBloomObject.current?.layers?.set(nonBloomLayer); // Exclude this object from bloom
   });
+  const assestMaterial = useLoader(MTLLoader, `/MODEL DEMO/Soap.mtl`);
+
+  const assest = useLoader(OBJLoader, "/MODEL DEMO/Soap.obj", (loader) => {
+    assestMaterial.preload();
+    loader.setMaterials(assestMaterial);
+  });
+  const tapMaterial = useLoader(MTLLoader, `/MODEL DEMO/tap.mtl`);
+
+  const tap = useLoader(OBJLoader, "/MODEL DEMO/tap.obj", (loader) => {
+    assestMaterial.preload();
+    loader.setMaterials(assestMaterial);
+  });
+
+  const mirror = useLoader(OBJLoader, "/MODEL DEMO/mirror.obj", (loader) => {});
+
+  const rollHandler = useLoader(
+    OBJLoader,
+    "/MODEL DEMO/toilet roll handler.obj",
+    (loader) => {
+      assestMaterial.preload();
+      loader.setMaterials(assestMaterial);
+    }
+  );
+
+  console.log(assest);
+
+  assest.children[0].material.shininess = 140;
   return (
     <>
+      <group position={[-1, 0.1, 2.2]} scale={0.045}>
+        <mesh
+          castShadow
+          geometry={assest.children[0].geometry}
+          material={assest.children[0].material}
+        ></mesh>
+      </group>
+      <group position={[-0.99, 0, 2]} scale={0.0433}>
+        <primitive object={tap}></primitive>
+      </group>
+      <group position={[-1, 0, 2]} scale={0.0433}>
+        <primitive object={rollHandler}></primitive>
+      </group>
+
       <group castShadow receiveShadow position={[-1, 0, 2]} scale={0.0017}>
         <EffectComposer>
           <DepthOfField focusDistance={1} focalLength={40} bokehScale={0} />
@@ -207,10 +248,14 @@ export default function Model() {
           <Vignette eskil={false} offset={0} darkness={0.3} />
         </EffectComposer>
 
-        <primitive ref={objRef} object={obj} />
-        {[40, 41, 42, 45, 46, 48, 49, 9, 10, 12].map((item) => {
+        {/* <primitive ref={objRef} object={obj} /> */}
+        {/* {[40, 41, 42, 45, 46, 48, 49, 9, 10, 12].map((item) => {
           return (
-            <mesh geometry={obj.children[item].geometry}>
+            <mesh
+              visible={false}
+              scale={0.8}
+              geometry={obj.children[item].geometry}
+            >
               <meshStandardMaterial
                 metalness={0.7}
                 roughness={0.2}
@@ -220,6 +265,14 @@ export default function Model() {
               ></meshStandardMaterial>
             </mesh>
           );
+        })} */}
+        {[1, 2, 3, 4, 5, 6, 7, 8, 14].map((item) => {
+          return (
+            <mesh
+              geometry={obj.children[item].geometry}
+              material={obj.children[item].material}
+            ></mesh>
+          );
         })}
         <mesh geometry={obj.children[15].geometry}>
           <meshStandardMaterial
@@ -228,6 +281,27 @@ export default function Model() {
             metalness={0.2}
           ></meshStandardMaterial>
         </mesh>
+        {/* <mesh geometry={obj.children[16].geometry} position={[1, 4, 1]}>
+          <MeshReflectorMaterial
+            // resolution={1024}
+
+            blur={[1000, 1000]}
+            mixBlur={1}
+            mirror={3}
+            // mixStrength={1}
+            // depthToBlurRatioBias={0.5}
+            // blur={[300, 100]}
+            resolution={2048}
+            // mixBlur={1}
+            mixStrength={1}
+            // roughness={1}
+            depthScale={2}
+            minDepthThreshold={0.4}
+            maxDepthThreshold={0.4}
+            // color="#050505"
+            // metalness={0.5}
+          ></MeshReflectorMaterial>
+        </mesh> */}
         {mesh.map((item: any) => {
           return (
             <mesh geometry={obj.children[item].geometry}>
@@ -259,15 +333,13 @@ export default function Model() {
         <mesh geometry={obj.children[38].geometry}>
           <meshPhongMaterial map={tiles}></meshPhongMaterial>
         </mesh>
-        {/* <mesh geometry={obj.children[17].geometry}>
+        <mesh geometry={obj.children[16].geometry}>
           <meshStandardMaterial
-            map={steel}
-            metalness={0.1}
-            roughness={0}
-            emissive={"#E7BB0F"}
-            emissiveIntensity={0.3}
+            map={steelMaterial}
+            roughness={0.6}
+            metalness={0.2}
           ></meshStandardMaterial>
-        </mesh> */}
+        </mesh>
         <mesh receiveShadow geometry={obj.children[34].geometry}>
           <meshStandardMaterial
             roughness={1}

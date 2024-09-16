@@ -1,0 +1,122 @@
+{
+  "asset": {
+    "generator": "Khronos glTF Blender I/O v4.1.63",
+    "version": "2.0"
+  },
+  "extensionsUsed": ["KHR_materials_clearcoat", "KHR_materials_sheen"],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Scene",
+      "nodes": [0]
+    }
+  ],
+  "nodes": [
+    {
+      "mesh": 0,
+      "name": "group_25",
+      "translation": [
+        -3.9370079040527344, 47.67716979980469, -10.117049217224121
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "doubleSided": true,
+      "extensions": {
+        "KHR_materials_clearcoat": {
+          "clearcoatFactor": 0.32283464074134827,
+          "clearcoatRoughnessFactor": 0.029999999329447746
+        },
+        "KHR_materials_sheen": {
+          "sheenColorFactor": [1.0, 1.0, 1.0],
+          "sheenRoughnessFactor": 0.5
+        }
+      },
+      "name": "Material.001",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.8005756139755249, 0.5185418128967285, 0.12013435363769531, 1
+        ],
+        "metallicFactor": 0.9291338324546814,
+        "roughnessFactor": 0.5
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "ID594",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0,
+            "NORMAL": 1,
+            "TEXCOORD_0": 2
+          },
+          "indices": 3,
+          "material": 0
+        }
+      ]
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "componentType": 5126,
+      "count": 316,
+      "max": [4.251968860626221, 12.401569366455078, 0],
+      "min": [0, 0, -11.22046947479248],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 316,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 316,
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5123,
+      "count": 498,
+      "type": "SCALAR"
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 3792,
+      "byteOffset": 0,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 3792,
+      "byteOffset": 3792,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 2528,
+      "byteOffset": 7584,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 996,
+      "byteOffset": 10112,
+      "target": 34963
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 11108,
+      "uri": "Tap, Soap, Mirror, Toilet roll holder .bin"
+    }
+  ]
+}
